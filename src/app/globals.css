@@ -1,42 +1,196 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   app/globals.css — FULL FILE (Tailwind v4-ready)
+   ========================================================= */
+@import "tailwindcss";
+
+/* ---------- Theme Tokens ---------- */
+@theme {
+  --font-sans: "Noto Sans Thai", ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Arial, sans-serif;
+
+  --brand-black: #0b0b0c;
+  --brand-red:   #b91c1c; /* red-700 */
+  --brand-orange:#ea580c; /* orange-600 */
+  --brand-cream: #f6f1ea;
+
+  --muted: #7a7a7a;
+
+  --radius: 16px;
+  --shadow-card: 0 18px 60px -22px rgba(0,0,0,.45);
+
+  --header-h: 72px; /* header สูงแบบพรีเมียม */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
+/* ---------- Base ---------- */
+html { scroll-behavior: smooth; }
+html, body { height: 100%; }
 body {
-  max-width: 100vw;
+  @apply bg-white text-neutral-900 font-sans min-h-screen;
+  font-family: var(--font-sans);
+}
+a { @apply underline-offset-2;}
+@layer base {
+  img, video { max-width: 100%; height: auto; }
+}
+
+/* ---------- Layout Helpers ---------- */
+.container { @apply mx-auto w-full max-w-[1200px] px-4; }
+.card { @apply rounded-[var(--radius)] border border-neutral-200 bg-white p-5 shadow-[var(--shadow-card)]; }
+
+/* Sections + Headings */
+.section { @apply py-12 md:py-16; scroll-margin-top: var(--header-h); }
+.section-title { @apply text-2xl md:text-3xl font-semibold; }
+.section-desc { color: var(--muted); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-[var(--radius)] border px-4 py-2 text-sm font-medium transition active:scale-[.98];
+}
+.btn-brand {
+  @apply text-white;
+  border-color: var(--brand-orange);
+  background: var(--brand-orange);
+  box-shadow: 0 8px 24px -8px rgba(234,88,12,.6);
+}
+.btn-ghost {
+  @apply bg-white text-neutral-900 hover:bg-neutral-50;
+  border-color: rgb(163 163 163 / 1); /* neutral-400 */
+}
+
+/* ---------- Badges ---------- */
+.badge { @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs; }
+.badge-dark { @apply text-white; background: var(--brand-black); }
+.badge-fire { color: var(--brand-orange); background: color-mix(in srgb, var(--brand-orange) 10%, transparent); }
+
+/* ---------- Tabs ---------- */
+.tabs { @apply flex w-full gap-2 overflow-x-auto; }
+.tab {
+  @apply whitespace-nowrap rounded-full border px-3 py-1.5 text-sm text-neutral-800 hover:bg-neutral-100 transition;
+}
+.tab-active {
+  color: white;
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+}
+
+/* ---------- Hero Background (dark coffee gradient + noise) ---------- */
+/* ลบ .bg-hero และ .bg-all ของเดิมทิ้งไป */
+
+.bg-main-wrapper {
+  background:
+    /* 1. แสงไฟสปอตไลต์ (ด้านบน-ซ้าย) */
+    radial-gradient(1200px 600px at 10% 0%, rgba(185,28,28,.25), transparent 60%),
+    
+    /* 2. แสงไฟสปอตไลต์ (ด้านบน-ขวา) */
+    radial-gradient(900px 600px at 100% 10%, rgba(234,88,12,.25), transparent 60%),
+    
+    /* 3. แสงไฟสปอตไลต์ (ด้านล่าง-ซ้าย) - ที่คุณขอเพิ่ม */
+    radial-gradient(1200px 600px at 10% 100%, rgba(185,28,28,.25), transparent 60%),
+    
+    /* 4. แสงไฟสปอตไลต์ (ด้านล่าง-ขวา) - ที่คุณขอเพิ่ม */
+    radial-gradient(900px 600px at 100% 100%, rgba(234,88,12,.25), transparent 60%),
+    
+    /* 5. พื้นหลังสีมืดไล่ระดับ (พื้นฐาน) */
+    linear-gradient(180deg, #0b0b0c 0%, #151516 50%, #1b1b1c 100%);
+  
+  position: relative;
   overflow-x: hidden;
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.bg-hero::after {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none; opacity:.15;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* ---------- Glass Panel ---------- */
+.glass { @apply bg-white/8 backdrop-blur border border-white/15; }
+
+/* ---------- Animations ---------- */
+@keyframes fadeUp { from { opacity:0; transform: translateY(10px) } to { opacity:1; transform: translateY(0) } }
+.anim-fadeUp { animation: fadeUp .6s ease-out both; }
+.anim-delay-1 { animation-delay: .1s }
+.anim-delay-2 { animation-delay: .2s }
+.anim-delay-3 { animation-delay: .3s }
+
+/* ---------- Media Helpers ---------- */
+.img-soft { @apply rounded-[var(--radius)] object-cover; }
+
+/* ---------- Brand Accents ---------- */
+.eyebrow { @apply text-xs tracking-wider uppercase font-medium; color: var(--brand-orange); }
+.accent-underline { position: relative; }
+.accent-underline::after {
+  content:""; position:absolute; left:0; bottom:-6px; width:96px; height:3px; border-radius:999px;
+  background-image: linear-gradient(to right, var(--brand-red), var(--brand-orange));
+}
+.divider-gradient { @apply h-[1px] w-full; background-image: linear-gradient(to right, var(--brand-red), var(--brand-orange)); }
+
+/* =========================================================
+   Premium Header UI + Accessibility
+   ========================================================= */
+/* Focus ring สวย ๆ ใช้กับลิงก์/ปุ่มใน header & ทั่วเว็บ */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-[12px];
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Nav link แบบ pill + gradient underline */
+.nav-link {
+  @apply relative inline-flex items-center justify-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition text-[var(--brand-cream)]/80;
+  letter-spacing: 0.04em;
+}
+.nav-link:hover:not([data-cta="true"]) {
+  @apply text-white;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 18px 40px -26px rgba(0,0,0,.55);
+}
+.nav-link[data-active="true"]:not([data-cta="true"]) {
+  @apply text-white;
+  background: color-mix(in srgb, var(--brand-orange) 38%, rgba(12,8,6,.55));
+  box-shadow: 0 22px 44px -30px rgba(234,88,12,.55), inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.nav-link[data-cta="true"] {
+  color: white;
+  box-shadow: 0 20px 48px -26px rgba(234,88,12,.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Header glass + เงาตอน scroll */
+.header-glass {
+  background:
+    radial-gradient(900px 500px at 12% -20%, rgba(234,88,12,.18), transparent 55%),
+    radial-gradient(600px 420px at 90% -30%, rgba(185,28,28,.16), transparent 60%),
+    linear-gradient(135deg, rgba(18,12,9,.92), rgba(10,6,5,.94));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 50px -32px rgba(0,0,0,.6);
+}
+.header-glass.scrolled {
+  background:
+    radial-gradient(900px 500px at 12% -20%, rgba(234,88,12,.22), transparent 60%),
+    radial-gradient(600px 420px at 90% -30%, rgba(185,28,28,.18), transparent 65%),
+    linear-gradient(135deg, rgba(18,12,9,.96), rgba(8,5,4,.98));
+  box-shadow: 0 24px 56px -34px rgba(0,0,0,.7);
+}
+
+/* Skip link (A11y) */
+.skip-link {
+  @apply sr-only;
+}
+.skip-link:focus {
+  position: fixed; left: 1rem; top: 1rem; z-index: 200;
+  background: var(--brand-black); color: white; padding: .5rem 1rem; border-radius: .5rem;
+  box-shadow: 0 10px 24px -12px rgba(0,0,0,.4);
+}
+
+/* =========================================================
+   Optional: Toast & misc tweaks (ใช้ได้ถ้ามีคอมโพเนนต์ toast)
+   ========================================================= */
+.toast-success { background: color-mix(in srgb, var(--brand-orange) 16%, white); color: var(--brand-black); }
+.toast-error   { background: color-mix(in srgb, var(--brand-red) 16%, white); color: var(--brand-black); }
+
+/* Keep space for fixed header (fallback ถ้าไม่ได้ใช้ padding ใน layout) */
+/* .has-fixed-header { padding-top: var(--header-h); } */
+.hero-visual {
+  position: relative;
+  aspect-ratio: 4 / 5;          /* คุมสัดส่วน */
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 60px -24px rgba(0,0,0,.45);
 }
