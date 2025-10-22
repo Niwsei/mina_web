@@ -5,9 +5,17 @@ import { useCartStore } from "@/components/cart/store";
 import { CategoryPills } from "@/components/menu/CategoryPills";
 import { SearchBar } from "@/components/menu/SearchBar";
 
-type Category = { id:string; name:string; products:any[] };
+export type MenuProduct = {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl?: string;
+  description?: string;
+};
 
-export function MenuClient({ initialMenu }:{ initialMenu: Category[] }){
+export type MenuCategory = { id:string; name:string; products:MenuProduct[] };
+
+export function MenuClient({ initialMenu }:{ initialMenu: MenuCategory[] }){
   const add = useCartStore(s=>s.add);
 
   const categories = useMemo(
@@ -18,27 +26,35 @@ export function MenuClient({ initialMenu }:{ initialMenu: Category[] }){
   const [active,setActive] = useState<string>("all");
   const [q,setQ] = useState("");
 
-  const products = useMemo(()=>{
-    const list = active==="all" ? initialMenu.flatMap(c=>c.products)
+  const products = useMemo<MenuProduct[]>(()=>{
+    const list = active==="all"
+      ? initialMenu.flatMap(c=>c.products)
       : (initialMenu.find(c=>c.id===active)?.products ?? []);
-    return q ? list.filter((p:any)=> p.name.toLowerCase().includes(q.toLowerCase())) : list;
+    return q ? list.filter(product=>product.name.toLowerCase().includes(q.toLowerCase())) : list;
   },[initialMenu, active, q]);
 
   return (
-    <section className="space-y-5">
-      <div className="sticky top-[64px] z-20 border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-        <div className="container py-3 grid gap-3 md:grid-cols-[1fr_320px]">
-          <CategoryPills categories={categories} active={active} onChange={setActive}/>
-          <SearchBar value={q} onChange={setQ} placeholder="ค้นหาเมนู…"/>
+    <section className="space-y-8">
+      <div className="sticky top-[calc(var(--header-h)+12px)] z-30">
+        <div className="relative overflow-hidden rounded-[calc(var(--radius)+4px)] border border-white/12 bg-[rgba(18,10,6,0.85)] px-5 py-5 shadow-[0_30px_90px_-45px_rgba(0,0,0,0.95)] backdrop-blur-xl">
+          <span className="shine-stripe" aria-hidden="true" />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+            <div className="flex-1">
+              <CategoryPills categories={categories} active={active} onChange={setActive} />
+            </div>
+            <div className="w-full lg:w-[320px]">
+              <SearchBar value={q} onChange={setQ} placeholder="ค้นหาเมนู…" />
+            </div>
+          </div>
         </div>
       </div>
 
       {products.length>0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 anim-fadeUp anim-delay-2">
-          {products.map((p:any)=>(
+        <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 anim-fadeUp anim-delay-2">
+          {products.map((product)=>(
             <ProductCard
-              key={p.id}
-              product={p}
+              key={product.id}
+              product={product}
               onAdd={(prod)=>add({productId:prod.id, name:prod.name, unitPrice:prod.price})}
             />
           ))}
@@ -52,9 +68,10 @@ export function MenuClient({ initialMenu }:{ initialMenu: Category[] }){
 
 function EmptyState({ query }:{ query:string }){
   return (
-    <div className="rounded-[var(--radius)] border border-dashed p-10 text-center anim-fadeUp">
-      <div className="badge badge-dark mb-2">ไม่มีผลลัพธ์</div>
-      <p className="text-sm text-[var(--muted)]">ไม่พบรายการที่ตรงกับ “{query}”</p>
+    <div className="floating-card anim-fadeUp space-y-2 rounded-[calc(var(--radius)+4px)] border-white/10 bg-[rgba(18,10,6,0.82)] p-10 text-center text-[var(--brand-cream)]/80">
+      <div className="badge badge-fire mb-2">ไม่มีผลลัพธ์</div>
+      <p className="text-sm">ไม่พบรายการที่ตรงกับ “{query}”</p>
+      <p className="text-xs text-[var(--brand-cream)]/60">ลองเปลี่ยนหมวดหมู่หรือกรองคำค้นหาใหม่อีกครั้ง</p>
     </div>
   );
 }
