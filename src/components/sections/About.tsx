@@ -63,13 +63,13 @@ export function About(){
             <div className="card glass p-0 overflow-hidden rounded-2xl shadow-md will-change-transform">
               <Image src="/home/angle_coffee.jpg" alt="บาร์กาแฟและทีม" width={1200} height={800} className="h-80 w-full object-cover" priority />
             </div>
-          <div className="absolute -left-6 -bottom-6 hidden md:block">
-            <div className="card p-0 overflow-hidden rounded-lg shadow-md">
+          <div className="absolute  -left-6 -bottom-6 hidden md:block">
+            <div className="card p-0 glass overflow-hidden rounded-lg shadow-md">
               <Image src="/home/view_coffee.jpg" alt="เมล็ดกาแฟ" width={300} height={240} className="h-32 w-44 object-cover" />
             </div>
           </div>
           <div className="absolute -right-6 -top-6 hidden md:block">
-            <div className="card p-0 overflow-hidden rounded-lg shadow-md">
+            <div className="card p-0 glass overflow-hidden rounded-lg shadow-md">
               <Image src="/home/spoon_coffee.jpg" alt="บาริสต้า" width={280} height={224} className="h-28 w-40 object-cover" />
             </div>
           </div>
