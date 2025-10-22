@@ -17,7 +17,7 @@
   --muted: #a58d78;
 
   --radius: 16px;
-  --shadow-card: 0 18px 60px -22px rgba(0,0,0,.45);
+  --shadow-card: 0 12px 40px -18px rgba(0,0,0,.35);
 
   --header-h: 72px; /* header สูงแบบพรีเมียม */
 }
@@ -56,11 +56,11 @@ a { @apply underline-offset-2;}
   color: var(--brand-cream);
   border: 0;
   background-image: linear-gradient(135deg, color-mix(in srgb, var(--brand-orange) 90%, black 10%), color-mix(in srgb, var(--brand-red) 70%, black 30%));
-  box-shadow: 0 20px 48px -20px rgba(199,106,58,.65), inset 0 0 0 1px rgba(255,255,255,.08);
+  box-shadow: 0 14px 36px -16px rgba(199,106,58,.45), inset 0 0 0 1px rgba(255,255,255,.06);
 }
 .btn-brand:hover {
   filter: brightness(1.05);
-  box-shadow: 0 24px 56px -20px rgba(199,106,58,.75);
+  box-shadow: 0 18px 44px -18px rgba(199,106,58,.55);
 }
 .btn-ghost {
   @apply bg-white text-neutral-900 hover:bg-neutral-50;
@@ -131,10 +131,10 @@ a { @apply underline-offset-2;}
 
 /* ---------- Glass Panel ---------- */
 .glass {
-  @apply border border-white/15;
-  background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02));
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  @apply border border-white/12;
+  background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .coffee-section {
@@ -196,8 +196,8 @@ a { @apply underline-offset-2;}
   width: 160px;
   height: 320px;
   background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.5), rgba(255,255,255,0));
-  filter: blur(32px);
-  opacity: .55;
+  filter: blur(24px);
+  opacity: .35;
   mix-blend-mode: screen;
   animation: steam-rise 9s ease-in-out infinite;
 }
@@ -279,7 +279,7 @@ a { @apply underline-offset-2;}
   border-radius: 1.1rem;
   background: rgba(26,16,11,0.75);
   border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 26px 60px -32px rgba(0,0,0,0.85);
+  box-shadow: 0 18px 48px -28px rgba(0,0,0,0.6);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 }
@@ -295,18 +295,27 @@ a { @apply underline-offset-2;}
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(30%); }
-  100% { transform: translateX(120%); }
+  /* Softer, slower sweep for a calmer sheen */
+  0% { transform: translate3d(-140%, 0, 0); opacity: 0; }
+  30% { opacity: 0.45; }
+  50% { transform: translate3d(0%, 0, 0); opacity: 0.65; }
+  70% { opacity: 0.35; }
+  100% { transform: translate3d(140%, 0, 0); opacity: 0; }
 }
 
 .shine-stripe {
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(255,255,255,0), rgba(255,255,255,0.16), rgba(255,255,255,0));
-  transform: translateX(-100%);
-  animation: shimmer 14s ease-in-out infinite;
-  opacity: .6;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 48%, rgba(255,255,255,0) 100%);
+  transform: translate3d(-140%, 0, 0);
+  animation: shimmer 4s cubic-bezier(.25,.8,.25,1) infinite;
+  will-change: transform, opacity;
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine-stripe { animation: none; opacity: .35; }
 }
 
 /* =========================================================
@@ -378,5 +387,5 @@ a { @apply underline-offset-2;}
   aspect-ratio: 4 / 5;          /* คุมสัดส่วน */
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 24px 60px -24px rgba(0,0,0,.45);
+  box-shadow: 0 18px 48px -20px rgba(0,0,0,.35);
 }
