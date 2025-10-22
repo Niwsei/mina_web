@@ -296,22 +296,28 @@ a { @apply underline-offset-2;}
 
 @keyframes shimmer {
   /* Softer, slower sweep for a calmer sheen */
-  0% { transform: translate3d(-140%, 0, 0); opacity: 0; }
-  30% { opacity: 0.45; }
-  50% { transform: translate3d(0%, 0, 0); opacity: 0.65; }
-  70% { opacity: 0.35; }
-  100% { transform: translate3d(140%, 0, 0); opacity: 0; }
+  0% { transform: translate3d(-120%, 0, 0); opacity: 0; }
+  35% { opacity: 0.32; }
+  55% { transform: translate3d(0%, 0, 0); opacity: 0.5; }
+  75% { opacity: 0.28; }
+  100% { transform: translate3d(120%, 0, 0); opacity: 0; }
 }
 
 .shine-stripe {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 48%, rgba(255,255,255,0) 100%);
-  transform: translate3d(-140%, 0, 0);
-  animation: shimmer 4s cubic-bezier(.25,.8,.25,1) infinite;
+  /* Narrower, subtler highlight */
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.10) 45%, rgba(255,255,255,0) 85%);
+  transform: translate3d(-120%, 0, 0);
+  /* slower, smoother timing for less visual noise */
+  animation: shimmer 6s cubic-bezier(.22,.9,.3,1) infinite;
   will-change: transform, opacity;
-  opacity: 0.45;
+  opacity: 0.28;
+  /* ensure the shine stays clipped to rounded cards/containers */
+  border-radius: var(--radius);
+  -webkit-clip-path: inset(0 round var(--radius));
+  clip-path: inset(0 round var(--radius));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -323,12 +329,12 @@ a { @apply underline-offset-2;}
    ========================================================= */
 /* Focus ring สวย ๆ ใช้กับลิงก์/ปุ่มใน header & ทั่วเว็บ */
 .focus-ring {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-orange)] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-[12px];
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--brand-orange) focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-[12px];
 }
 
 /* Nav link แบบ pill + gradient underline */
 .nav-link {
-  @apply relative inline-flex items-center justify-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition text-[var(--brand-cream)]/80;
+  @apply relative inline-flex items-center justify-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition text-(--brand-cream)/80;
   letter-spacing: 0.04em;
 }
 .nav-link:hover:not([data-cta="true"]) {

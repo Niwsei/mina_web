@@ -36,9 +36,9 @@ export function MenuClient({ initialMenu }:{ initialMenu: MenuCategory[] }){
   return (
     <section className="space-y-8">
       <div className="sticky top-[calc(var(--header-h)+12px)] z-30">
-        <div className="relative overflow-hidden rounded-[calc(var(--radius)+4px)] border border-white/12 bg-[rgba(18,10,6,0.85)] px-5 py-5 shadow-[0_30px_90px_-45px_rgba(0,0,0,0.95)] backdrop-blur-xl">
+        <div className="relative overflow-hidden rounded-(--radius+4px) border border-white/8 bg-[rgba(18,10,6,0.75)] px-4 py-4 shadow-sm backdrop-blur-md">
           <span className="shine-stripe" aria-hidden="true" />
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
             <div className="flex-1">
               <CategoryPills categories={categories} active={active} onChange={setActive} />
             </div>
@@ -68,10 +68,10 @@ export function MenuClient({ initialMenu }:{ initialMenu: MenuCategory[] }){
 
 function EmptyState({ query }:{ query:string }){
   return (
-    <div className="floating-card anim-fadeUp space-y-2 rounded-[calc(var(--radius)+4px)] border-white/10 bg-[rgba(18,10,6,0.82)] p-10 text-center text-[var(--brand-cream)]/80">
+    <div className="floating-card anim-fadeUp space-y-2 rounded-[calc(var(--radius)+4px)] border-white/10 bg-[rgba(18,10,6,0.82)] p-10 text-center text-(--brand-cream)/80">
       <div className="badge badge-fire mb-2">ไม่มีผลลัพธ์</div>
       <p className="text-sm">ไม่พบรายการที่ตรงกับ “{query}”</p>
-      <p className="text-xs text-[var(--brand-cream)]/60">ลองเปลี่ยนหมวดหมู่หรือกรองคำค้นหาใหม่อีกครั้ง</p>
+      <p className="text-xs text-(--brand-cream)/60">ลองเปลี่ยนหมวดหมู่หรือกรองคำค้นหาใหม่อีกครั้ง</p>
     </div>
   );
 }
