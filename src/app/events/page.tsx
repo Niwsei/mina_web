@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 export default async function EventsPage() {
   const events = await fetchEvents();
   return (
-    <main className="section">
+    <main className="section bg-main-wrapper">
       <div className="container space-y-6">
         <header className="space-y-1">
-          <h1 className="section-title">อีเวนต์</h1>
+          <h1 className="section-title text-white">อีเวนต์</h1>
           <p className="section-desc">เวิร์กช็อป/กิจกรรมเพื่อคอกาแฟ</p>
         </header>
         <EventsClient initial={events} />

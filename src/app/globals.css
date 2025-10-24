@@ -103,11 +103,17 @@ a { @apply underline-offset-2;}
   position: relative;
   isolation: isolate;
   overflow-x: hidden;
-  background:
+/*   background:
     radial-gradient(900px 600px at 12% -10%, rgba(199,106,58,.28), transparent 62%),
     radial-gradient(1200px 800px at 92% 0%, rgba(138,51,34,.24), transparent 60%),
     radial-gradient(1000px 640px at 8% 100%, rgba(93,52,32,.35), transparent 70%),
     linear-gradient(180deg, #0b0604 0%, #140a06 45%, #1a110c 100%);
+} */
+ background:
+  radial-gradient(900px 600px at 12% -10%, rgba(220, 140, 90, .28), transparent 62%),
+  radial-gradient(1200px 800px at 92% 0%, rgba(200, 90, 70, .24), transparent 60%),
+  radial-gradient(1000px 640px at 8% 100%, rgba(150, 100, 80, .35), transparent 70%),
+  linear-gradient(180deg, #1f1a16 0%, #2a211c 45%, #382f2a 100%);
 }
 .bg-main-wrapper::before,
 .bg-main-wrapper::after {

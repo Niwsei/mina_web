@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 export default async function PromotionsPage() {
   const promos = await fetchPromotions();
   return (
-    <main className="section">
+    <main className="section bg-main-wrapper">
       <div className="container space-y-6">
         <header className="space-y-1">
-          <h1 className="section-title">โปรโมชัน</h1>
+          <h1 className="section-title text-white">โปรโมชัน</h1>
           <p className="section-desc">ข้อเสนอที่เลือกสรรเพื่อคุณลูกค้าประจำ</p>
         </header>
         <PromoClient initial={promos} />

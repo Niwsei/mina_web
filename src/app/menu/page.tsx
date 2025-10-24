@@ -30,7 +30,7 @@ export default async function MenuPage() {
     .slice(0, 3);
 
   return (
-    <main className="section coffee-section bg-red-950/60">
+    <main className="section coffee-section bg-main-wrapper">
       <div className="container">
   <div className="section-shell pattern-grid overflow-hidden space-y-10 text-[var(--brand-cream)]">
           <div className="relative">
