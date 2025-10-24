@@ -72,9 +72,23 @@ export function buildMenu(categories: Category[]) {
   };
 }
 
+interface SchemaOffer {
+  "@type": "Offer";
+  name: string;
+  url: string;
+  availabilityStarts?: string;
+  availabilityEnds?: string;
+  category: string;
+  description: string;
+  couponCode?: string;
+  discount?: string;
+  price?: string;
+  priceCurrency?: string;
+}
+
 export function buildOffers(promos: Promotion[]) {
   const offers = promos.map(p => {
-    const base:any = {
+    const base: SchemaOffer = {
       "@type": "Offer", name: p.title, url: `${SITE.url}/promotions`,
       availabilityStarts: p.period?.start, ...(p.period?.end ? { availabilityEnds: p.period.end } : {}),
       category: p.type, description: p.description
@@ -82,7 +96,10 @@ export function buildOffers(promos: Promotion[]) {
     if (p.code) base["couponCode"] = p.code;
     if (typeof p.value === "number") {
       if (p.type === "PERCENT") base["discount"] = `${p.value}%`;
-      else base["price"] = (p.value/100).toFixed(2), base["priceCurrency"]="THB";
+      else {
+        base["price"] = (p.value/100).toFixed(2);
+        base["priceCurrency"] = "THB";
+      }
     }
     return base;
   });

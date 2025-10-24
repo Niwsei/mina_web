@@ -1,7 +1,7 @@
 import { memo } from "react";
 import Image from "next/image";
+import { Product } from "@/lib/types";
 import { Plus } from "lucide-react";
-type Product = { id:string; name:string; price:number; imageUrl?:string; description?:string };
 
 export const ProductCard = memo(function ProductCard({ product, onAdd }:{
   product: Product; onAdd: (p: Product)=>void;

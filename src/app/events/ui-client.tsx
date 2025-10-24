@@ -2,6 +2,7 @@
 import type { EventItem } from "@/lib/types";
 import { toast } from "@/components/ui/toast";
 import { CalendarDays, Clock, MapPin, Ticket } from "lucide-react";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ContentCard } from "@/components/shared/ContentCard";
 import { ContentHero } from "@/components/shared/ContentHero";
@@ -118,7 +119,14 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
             </div>
           }
           visual={
-            featured.imageUrl && <img src={featured.imageUrl} alt={featured.title} loading="lazy" />
+            featured.imageUrl && (
+              <Image
+                src={featured.imageUrl}
+                alt={featured.title}
+                fill
+                className="object-cover"
+              />
+            )
           }
         />
       )}
@@ -150,12 +158,14 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
               key={event.id}
               image={
                 event.imageUrl && (
-                  <img
-                    src={event.imageUrl}
-                    alt={event.title}
-                    className="content-card-image"
-                    loading="lazy"
-                  />
+                  <div className="relative w-full h-[160px]">
+                    <Image
+                      src={event.imageUrl}
+                      alt={event.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 )
               }
               header={

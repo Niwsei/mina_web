@@ -1,5 +1,6 @@
 "use client";
-import type { Promotion } from "@/lib/types";
+
+import type { Promotion, ApplyPromoResponse } from "@/lib/types";
 import { toast } from "@/components/ui/toast";
 import { Copy, Gift, Timer, Trophy } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -94,7 +95,7 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
     }
   }
 
-  async function apply(promo: Promotion) {
+  async function handleApply(promo: Promotion) {
     // Basic guard: promo must be ACTIVE
     if (promo.status !== "ACTIVE") {
       toast({ title: "โปรโมชั่นไม่สามารถใช้ได้", description: "โปรโมชั่นนี้ยังไม่พร้อมใช้งาน", variant: "info" });
@@ -119,14 +120,14 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
 
     const subtotal = items.reduce((s, it) => s + it.unitPrice * it.qty, 0);
     try {
-      const res = await applyPromo(items.map(i=>({ productId:i.productId, qty:i.qty, unitPrice:i.unitPrice })), subtotal, promo.code);
+      const res: ApplyPromoResponse = await applyPromo(items.map(i=>({ productId:i.productId, qty:i.qty, unitPrice:i.unitPrice })), subtotal, promo.code);
       if (res.discount && res.discount > 0) {
         useCartStore.getState().setDiscount(promo.code || "", res.discount);
         toast({ title: "โปรโมชั่นใช้ได้", description: res.breakdown.join('\n'), variant: "success" });
       } else {
         toast({ title: "ไม่สามารถใช้โปรโมชั่น", description: res.breakdown.join('\n'), variant: "error" });
       }
-    } catch (err) {
+    } catch {
       toast({ title: "เกิดข้อผิดพลาด", description: "ไม่สามารถตรวจสอบโปรโมชั่นได้", variant: "error" });
     }
   }
@@ -182,7 +183,7 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
               </dl>
               <div className="flex flex-col gap-3">
                 {featured.code ? (
-                  <button className="btn btn-brand" onClick={() => copy(featured.code)}>
+                  <button className="btn btn-brand" onClick={() => handleApply(featured)}>
                     <Copy size={16} /> ใช้โค้ด {featured.code}
                   </button>
                 ) : (

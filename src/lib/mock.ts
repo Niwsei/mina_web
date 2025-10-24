@@ -1,5 +1,5 @@
 import type {
-  Category, ApplyPromoResponse, CreateOrderPayload, OrderResponse, Product, Promotion, EventItem
+  Category, ApplyPromoResponse, CreateOrderPayload, OrderResponse, Promotion, EventItem
 } from "./types";
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));

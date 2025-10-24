@@ -5,11 +5,11 @@ import { useCartStore } from "@/components/cart/store";
 import { ApplyPromo } from "@/components/cart/ApplyPromo";
 import { CartSummary } from "@/components/cart/CartSummary";
 import { ProductModal } from "@/components/modals/ProductModal";
-import type { Product } from "@/lib/types";
+import type { Category, Product } from "@/lib/types";
 import { ShoppingCart, X } from "lucide-react";
 import { toast } from "@/components/ui/toast";
 
-export function OrderClient({ initialMenu }: { initialMenu: any[] }) {
+export function OrderClient({ initialMenu }: { initialMenu: Category[] }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -120,10 +120,10 @@ export function OrderClient({ initialMenu }: { initialMenu: any[] }) {
 }
 
 /* local UI pieces */
-function ProductListOrder({ menu, onSelect }: { menu: any[]; onSelect: (p: Product) => void }) {
+function ProductListOrder({ menu, onSelect }: { menu: Category[]; onSelect: (p: Product) => void }) {
   return (
     <div className="space-y-6 anim-fadeUp">
-      {menu.map((cat: any) => (
+      {menu.map((cat: Category) => (
         <section key={cat.id} className="space-y-2">
           <h3 className="text-lg font-semibold">{cat.name}</h3>
           <div className="divide-y rounded-[var(--radius)] border">

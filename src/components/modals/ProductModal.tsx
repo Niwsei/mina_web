@@ -1,7 +1,7 @@
-"use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Product, ModifierOption } from "@/lib/types";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 type Props = {
   product: Product | null;
@@ -79,20 +79,19 @@ export function ProductModal({ product, open, onClose, onConfirm }: Props){
   const [qty,setQty] = useState(1);
 
   // reset when product changes
-  useMemo(()=>{ setSize(null); setMilk(null); setExtras(new Set()); setQty(1); return null; }, [product]);
+  useEffect(()=>{ setSize(null); setMilk(null); setExtras(new Set()); setQty(1); }, [product]);
 
-  if(!open || !product) return null;
-
-  const price = useMemo(()=>{
-    let p = product.price;
+  const price = useMemo(()=>{let p = product?.price || 0;
     const find = (opts?: ModifierOption[], id?: string|null) => opts?.find(o=>o.id===id || false)?.delta ?? 0;
-    p += find(product.modifiers?.sizes, size);
-    p += find(product.modifiers?.milk, milk);
-    if(product.modifiers?.extras){
+    p += find(product?.modifiers?.sizes, size);
+    p += find(product?.modifiers?.milk, milk);
+    if(product?.modifiers?.extras){
       for(const e of extras) p += product.modifiers.extras.find(x=>x.id===e)?.delta ?? 0;
     }
     return p;
   }, [product, size, milk, extras]);
+
+  if(!open || !product) return null;
 
   const labelParts:string[] = [];
   if(size) labelParts.push(size);
@@ -112,7 +111,11 @@ export function ProductModal({ product, open, onClose, onConfirm }: Props){
         </div>
 
         <div className="space-y-4">
-          {product.imageUrl && <img src={product.imageUrl} alt={product.name} className="h-40 w-full rounded-[12px] object-cover" loading="lazy"/>}
+          {product.imageUrl && (
+            <div className="relative h-40 w-full rounded-[12px] overflow-hidden">
+              <Image src={product.imageUrl} alt={product.name} fill className="object-cover" />
+            </div>
+          )}
           {has?.sizes && <RadioRow title="ขนาด" options={has.sizes} value={size} onChange={setSize}/>}
           {has?.milk && <RadioRow title="นม" options={has.milk} value={milk} onChange={setMilk}/>}
           {has?.extras && (
