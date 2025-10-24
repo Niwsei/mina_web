@@ -1,10 +1,11 @@
 "use client";
 import type { Promotion } from "@/lib/types";
 import { toast } from "@/components/ui/toast";
-import { Copy, Gift, Sparkles, Timer, Trophy } from "lucide-react";
+import { Copy, Gift, Timer, Trophy } from "lucide-react";
 import { useMemo, useState } from "react";
+import { ContentCard } from "@/components/shared/ContentCard";
+import { ContentHero } from "@/components/shared/ContentHero";
 import { useCartStore } from "@/components/cart/store";
-import { applyPromo } from "@/lib/api";
 
 type PromoTab = Promotion["status"] | "ALL";
 
@@ -132,15 +133,12 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
   if (!stats.total) {
     return (
       <section className="space-y-8">
-        <div className="promo-hero">
-          <div className="promo-hero-content">
-            <span className="badge badge-dark uppercase tracking-[0.2em]">โปรโมชัน</span>
-            <h2 className="text-2xl font-semibold md:text-3xl">ยังไม่มีข้อเสนอในขณะนี้</h2>
-            <p className="text-sm text-neutral-100/80 md:text-base">
-              กลับมาใหม่เร็ว ๆ นี้เพื่อรับส่วนลดและสิทธิพิเศษก่อนใคร
-            </p>
-          </div>
-        </div>
+        <ContentHero
+          eyebrow={{ text: "โปรโมชัน" }}
+          title="ยังไม่มีข้อเสนอในขณะนี้"
+          description="กลับมาใหม่เร็ว ๆ นี้เพื่อรับส่วนลดและสิทธิพิเศษก่อนใคร"
+          meta={<></>}
+        />
       </section>
     );
   }
@@ -148,60 +146,56 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
   return (
     <section className="space-y-6 md:space-y-10">
       {featured && (
-        <div className="promo-hero">
-          <div className="promo-hero-content">
-            <span className="badge badge-dark inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em]">
-              <Sparkles size={16} /> Featured Offer
-            </span>
-            <h2 className="text-2xl font-semibold text-(--brand-cream) md:text-4xl">
-              {featured.title}
-            </h2>
-            <p className="max-w-xl text-sm text-neutral-100/80 md:text-base">
-              {featured.description}
-            </p>
-            <div className="promo-hero-meta">
-              <span className="promo-hero-pill">
+        <ContentHero
+          eyebrow={{ text: "Featured Offer" }}
+          title={featured.title}
+          description={featured.description}
+          meta={
+            <>
+              <span className="content-pill">
                 <Timer size={16} /> {formatDateRange(featured.period, formatter)}
               </span>
-              <span className="promo-hero-pill">
+              <span className="content-pill">
                 <Gift size={16} /> {formatValue(featured) ?? "ข้อเสนอพิเศษจากเรา"}
               </span>
-              <span className={`promo-hero-pill ${statusToneHero[featured.status]}`}>
+              <span className={`content-pill ${statusToneHero[featured.status]}`}>
                 <Trophy size={16} /> {statusLabel[featured.status]}
               </span>
-            </div>
-          </div>
-          <aside className="promo-hero-side">
-            <dl className="promo-hero-stats">
-              <div>
-                <dt>โปรทั้งหมด</dt>
-                <dd>{stats.total}</dd>
+            </>
+          }
+          side={
+            <>
+              <dl className="content-hero-stats">
+                <div>
+                  <dt>โปรทั้งหมด</dt>
+                  <dd>{stats.total}</dd>
+                </div>
+                <div>
+                  <dt>ใช้งานได้</dt>
+                  <dd>{stats.active}</dd>
+                </div>
+                <div>
+                  <dt>เร็ว ๆ นี้</dt>
+                  <dd>{stats.upcoming}</dd>
+                </div>
+              </dl>
+              <div className="flex flex-col gap-3">
+                {featured.code ? (
+                  <button className="btn btn-brand" onClick={() => copy(featured.code)}>
+                    <Copy size={16} /> ใช้โค้ด {featured.code}
+                  </button>
+                ) : (
+                  <button className="btn btn-ghost-dark" onClick={() => copy(undefined)}>
+                    <Copy size={16} /> ดูรายละเอียด
+                  </button>
+                )}
+                <p className="text-xs text-neutral-100/70">
+                  กดปุ่มเพื่อคัดลอกโค้ดไปใช้งานที่หน้าเช็กเอาต์ได้ทันที
+                </p>
               </div>
-              <div>
-                <dt>ใช้งานได้</dt>
-                <dd>{stats.active}</dd>
-              </div>
-              <div>
-                <dt>เร็ว ๆ นี้</dt>
-                <dd>{stats.upcoming}</dd>
-              </div>
-            </dl>
-            <div className="flex flex-col gap-3">
-              {featured.code ? (
-                <button className="btn btn-brand" onClick={() => copy(featured.code)}>
-                  <Copy size={16} /> ใช้โค้ด {featured.code}
-                </button>
-              ) : (
-                <button className="btn btn-ghost-dark" onClick={() => copy(undefined)}>
-                  <Copy size={16} /> ดูรายละเอียด
-                </button>
-              )}
-              <p className="text-xs text-neutral-100/70">
-                กดปุ่มเพื่อคัดลอกโค้ดไปใช้งานที่หน้าเช็กเอาต์ได้ทันที
-              </p>
-            </div>
-          </aside>
-        </div>
+            </>
+          }
+        />
       )}
 
       <div className="surface-panel space-y-6">
@@ -227,23 +221,39 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filtered.map((promo) => (
-            <article key={promo.id} className="promo-card">
-              {promo.badge && <span className="promo-card-badge">{promo.badge}</span>}
-              <header className="flex items-start justify-between gap-3">
-                <div className="space-y-1">
-                  <h4 className="text-lg font-semibold text-neutral-900">{promo.title}</h4>
-                  {formatValue(promo) && (
-                    <p className="text-sm font-medium text-(--brand-red)">
-                      {formatValue(promo)}
-                    </p>
+            <ContentCard
+              key={promo.id}
+              badge={promo.badge}
+              header={
+                <>
+                  <div className="space-y-1">
+                    <h4 className="text-lg font-semibold text-neutral-900">{promo.title}</h4>
+                    {formatValue(promo) && (
+                      <p className="text-sm font-medium text-[var(--brand-red)]">
+                        {formatValue(promo)}
+                      </p>
+                    )}
+                  </div>
+                  <span className={`content-status ${statusToneCard[promo.status]}`}>
+                    {statusLabel[promo.status]}
+                  </span>
+                </>
+              }
+              footer={
+                <>
+                  {promo.code ? (
+                    <code className="promo-code">{promo.code}</code>
+                  ) : (
+                    <span className="text-sm text-neutral-500">ไม่ต้องใช้โค้ด</span>
                   )}
-                </div>
-                <span className={`promo-status ${statusToneCard[promo.status]}`}>
-                  {statusLabel[promo.status]}
-                </span>
-              </header>
+                  <button className="btn btn-ghost" onClick={() => copy(promo.code)}>
+                    <Copy size={16} /> คัดลอก
+                  </button>
+                </>
+              }
+            >
               <p className="text-sm text-neutral-700">{promo.description}</p>
-              <dl className="promo-meta">
+              <dl className="content-meta" data-type="flex">
                 <div>
                   <dt>ช่วงเวลา</dt>
                   <dd>{formatDateRange(promo.period, formatter)}</dd>
@@ -253,17 +263,7 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
                   <dd>{promo.type.replaceAll("_", " ")}</dd>
                 </div>
               </dl>
-              <div className="promo-card-footer">
-                {promo.code ? (
-                  <code className="promo-code">{promo.code}</code>
-                ) : (
-                  <span className="text-sm text-neutral-500">ไม่ต้องใช้โค้ด</span>
-                )}
-                <button className="btn btn-ghost" onClick={() => copy(promo.code)}>
-                  <Copy size={16} /> คัดลอก
-                </button>
-              </div>
-            </article>
+            </ContentCard>
           ))}
         </div>
       </div>
