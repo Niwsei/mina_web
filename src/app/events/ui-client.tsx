@@ -1,8 +1,10 @@
 "use client";
 import type { EventItem } from "@/lib/types";
 import { toast } from "@/components/ui/toast";
-import { CalendarDays, Clock, MapPin, Sparkles, Ticket } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Ticket } from "lucide-react";
 import { useMemo, useState } from "react";
+import { ContentCard } from "@/components/shared/ContentCard";
+import { ContentHero } from "@/components/shared/ContentHero";
 
 type EventTab = "UPCOMING" | "PAST" | "ALL";
 
@@ -75,15 +77,12 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
   if (!stats.total) {
     return (
       <section className="space-y-8">
-        <div className="event-hero">
-          <div className="event-hero-body">
-            <span className="badge badge-dark uppercase tracking-[0.3em]">Events</span>
-            <h2 className="text-2xl font-semibold md:text-3xl">ยังไม่มีกิจกรรมในขณะนี้</h2>
-            <p className="text-sm text-neutral-100/80 md:text-base">
-              ติดตามช่องทางนี้เพื่ออัปเดตเวิร์กช็อปและกิจกรรมรอบถัดไป
-            </p>
-          </div>
-        </div>
+        <ContentHero
+          eyebrow={{ text: "Events" }}
+          title="ยังไม่มีกิจกรรมในขณะนี้"
+          description="ติดตามช่องทางนี้เพื่ออัปเดตเวิร์กช็อปและกิจกรรมรอบถัดไป"
+          meta={<></>}
+        />
       </section>
     );
   }
@@ -91,25 +90,25 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
   return (
     <section className="space-y-6 md:space-y-10">
       {featured && (
-        <div className="event-hero">
-          <div className="event-hero-body">
-            <span className="badge badge-dark inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em]">
-              <Sparkles size={16} /> Highlight Event
-            </span>
-            <h2 className="text-2xl font-semibold text-[var(--brand-cream)] md:text-4xl">{featured.title}</h2>
-            <p className="max-w-xl text-sm text-neutral-100/80 md:text-base">{featured.blurb}</p>
-            <div className="event-hero-meta">
-              <span className="event-pill">
+        <ContentHero
+          eyebrow={{ text: "Highlight Event" }}
+          title={featured.title}
+          description={featured.blurb}
+          meta={
+            <>
+              <span className="content-pill">
                 <CalendarDays size={16} /> {formatDate(featured.date, longFormatter)}
               </span>
-              <span className="event-pill">
+              <span className="content-pill">
                 <Clock size={16} /> {featured.time}
               </span>
-              <span className="event-pill">
+              <span className="content-pill">
                 <MapPin size={16} /> {featured.location}
               </span>
-            </div>
-            <div className="event-hero-actions">
+            </>
+          }
+          side={
+            <div className="content-hero-actions">
               <button className="btn btn-brand" onClick={() => rsvp(featured)}>
                 <Ticket size={16} /> RSVP ฟรี
               </button>
@@ -117,13 +116,11 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
                 {stats.upcoming} กิจกรรมกำลังเปิดรับสำรองที่นั่ง
               </p>
             </div>
-          </div>
-          {featured.imageUrl && (
-            <div className="event-hero-visual">
-              <img src={featured.imageUrl} alt={featured.title} loading="lazy" />
-            </div>
-          )}
-        </div>
+          }
+          visual={
+            featured.imageUrl && <img src={featured.imageUrl} alt={featured.title} loading="lazy" />
+          }
+        />
       )}
 
       <div className="surface-panel space-y-6">
@@ -149,38 +146,33 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filtered.map((event) => (
-            <article key={event.id} className="event-card">
-              {event.imageUrl && (
-                <img src={event.imageUrl} alt={event.title} className="event-card-image" loading="lazy" />
-              )}
-              <div className="event-card-body">
-                <header className="flex items-start justify-between gap-3">
+            <ContentCard
+              key={event.id}
+              image={
+                event.imageUrl && (
+                  <img
+                    src={event.imageUrl}
+                    alt={event.title}
+                    className="content-card-image"
+                    loading="lazy"
+                  />
+                )
+              }
+              header={
+                <>
                   <div className="space-y-1">
                     <h4 className="text-lg font-semibold text-neutral-900">{event.title}</h4>
                     <p className="text-sm text-[var(--brand-red)]">
                       {formatDate(event.date, shortFormatter)} · {event.time}
                     </p>
                   </div>
-                  <span className={`event-status ${statusTone[event.status]}`}>
+                  <span className={`content-status ${statusTone[event.status]}`}>
                     {statusLabel[event.status]}
                   </span>
-                </header>
-                <p className="text-sm text-neutral-700">{event.blurb}</p>
-                <dl className="event-meta">
-                  <div>
-                    <dt>วันที่</dt>
-                    <dd>{formatDate(event.date, longFormatter)}</dd>
-                  </div>
-                  <div>
-                    <dt>เวลา</dt>
-                    <dd>{event.time}</dd>
-                  </div>
-                  <div>
-                    <dt>สถานที่</dt>
-                    <dd>{event.location}</dd>
-                  </div>
-                </dl>
-                <div className="event-card-footer">
+                </>
+              }
+              footer={
+                <div className="flex w-full justify-end">
                   <button
                     className={`btn ${event.status === "PAST" ? "btn-ghost" : "btn-brand"}`}
                     onClick={() => rsvp(event)}
@@ -188,8 +180,24 @@ export function EventsClient({ initial }: { initial: EventItem[] }) {
                     <Ticket size={16} /> {event.status === "PAST" ? "ดูสรุปกิจกรรม" : "RSVP"}
                   </button>
                 </div>
-              </div>
-            </article>
+              }
+            >
+              <p className="text-sm text-neutral-700">{event.blurb}</p>
+              <dl className="content-meta">
+                <div>
+                  <dt>วันที่</dt>
+                  <dd>{formatDate(event.date, longFormatter)}</dd>
+                </div>
+                <div>
+                  <dt>เวลา</dt>
+                  <dd>{event.time}</dd>
+                </div>
+                <div>
+                  <dt>สถานที่</dt>
+                  <dd>{event.location}</dd>
+                </div>
+              </dl>
+            </ContentCard>
           ))}
         </div>
       </div>
