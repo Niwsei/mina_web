@@ -10,7 +10,7 @@ export function Reviews(){
   const avg = (REVIEWS.reduce((s,r)=>s+r.rating,0)/REVIEWS.length).toFixed(1);
 
   return (
-    <section className="section coffee-section bg-inherit text-(--brand-cream)">
+    <section className="section coffee-section bg-inherit text-[var(--brand-cream)]">
       <div className="pointer-events-none absolute inset-x-0 top-6 mx-auto h-40 w-40 rounded-full border border-white/10 bg-[radial-gradient(circle_at_center,_rgba(224,173,99,0.24),_rgba(11,7,5,0)_75%)] blur-[80px]" />
       <div className="container relative">
         <div className="section-shell pattern-grid overflow-hidden space-y-8">
@@ -21,16 +21,16 @@ export function Reviews(){
               <h2 className="section-title text-white drop-shadow-[0_12px_24px_rgba(0,0,0,.55)]">เสียงจากลูกค้า</h2>
               <div className="glow-ring relative inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm">
                 <span className="flex">
-                  {[...Array(5)].map((_,i)=><Star key={i} size={16} className="fill-(--brand-orange) text-(--brand-orange)"/>)}
+                  {[...Array(5)].map((_,i)=><Star key={i} size={16} className="fill-[var(--brand-orange)] text-[var(--brand-orange)]"/>)}
                 </span>
                 <b className="tabular-nums text-white">{avg}/5</b>
-                <span className="text-(--brand-cream)/70">จาก {REVIEWS.length}+ รีวิว</span>
+                <span className="text-[var(--brand-cream)]/70">จาก {REVIEWS.length}+ รีวิว</span>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-2">
               {["บรรยากาศอบอุ่น", "บาริสต้าใส่ใจ", "เมล็ดคั่วสด"].map((pill)=>(
-                <span key={pill} className="taste-chip text-(--brand-cream)/85">{pill}</span>
+                <span key={pill} className="taste-chip text-[var(--brand-cream)]/85">{pill}</span>
               ))}
             </div>
 
@@ -54,17 +54,17 @@ export function Reviews(){
                   <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[rgba(255,255,255,0.12)] text-white/90">{r.author[0]}</div>
                   <div>
                     <div className="font-medium text-white">{r.author}</div>
-                    <div className="text-xs text-(--brand-cream)/60">{r.source}</div>
+                    <div className="text-xs text-[var(--brand-cream)]/60">{r.source}</div>
                   </div>
                   <div className="ml-auto flex">
-                    {[...Array(r.rating)].map((_,i)=><Star key={i} size={14} className="fill-(--brand-orange) text-(--brand-orange)"/>)}
+                    {[...Array(r.rating)].map((_,i)=><Star key={i} size={14} className="fill-[var(--brand-orange)] text-[var(--brand-orange)]"/>)}
                   </div>
                 </div>
-                <p className="relative text-sm leading-relaxed text-(--brand-cream)/90">
-                  <span className="absolute -left-2 -top-3 text-4xl text-(--brand-orange)/30">“</span>
+                <p className="relative text-sm leading-relaxed text-[var(--brand-cream)]/90">
+                  <span className="absolute -left-2 -top-3 text-4xl text-[var(--brand-orange)]/30">“</span>
                   {r.text}
                 </p>
-                <div className="pt-4 text-xs uppercase tracking-[0.3em] text-(--brand-cream)/45">real guests</div>
+                <div className="pt-4 text-xs uppercase tracking-[0.3em] text-[var(--brand-cream)]/45">real guests</div>
               </article>
             ))}
           </div>
@@ -72,7 +72,7 @@ export function Reviews(){
           <div className="divider-gradient" />
           <div className="flex flex-wrap items-center justify-between gap-4">
             <a href="#" className="btn btn-brand">เขียนรีวิว</a>
-            <a href="#" className="text-sm underline text-(--brand-cream)/85">อ่านรีวิวทั้งหมด</a>
+            <a href="#" className="text-sm underline text-[var(--brand-cream)]/85">อ่านรีวิวทั้งหมด</a>
           </div>
         </div>
       </div>
