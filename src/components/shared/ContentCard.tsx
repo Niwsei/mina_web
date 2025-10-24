@@ -16,8 +16,10 @@ export function ContentCard({
     <article className="content-card">
       {image}
       <div className="content-card-body">
-        {badge && <span className="content-card-badge">{badge}</span>}
-        <header className="flex items-start justify-between gap-3">{header}</header>
+        <div className="relative">
+          {badge && <span className="content-card-badge">{badge}</span>}
+          <header className="flex items-start justify-between gap-3 mt-4">{header}</header>
+        </div>
         {children}
         <div className="content-card-footer">{footer}</div>
       </div>

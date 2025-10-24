@@ -72,7 +72,6 @@ function CheckboxRow({
 }
 
 export function ProductModal({ product, open, onClose, onConfirm }: Props){
-  const has = product?.modifiers;
   const [size,setSize] = useState<string | null>(null);
   const [milk,setMilk] = useState<string | null>(null);
   const [extras,setExtras] = useState<Set<string>>(new Set());
@@ -81,9 +80,8 @@ export function ProductModal({ product, open, onClose, onConfirm }: Props){
   // reset when product changes
   useMemo(()=>{ setSize(null); setMilk(null); setExtras(new Set()); setQty(1); return null; }, [product]);
 
-  if(!open || !product) return null;
-
   const price = useMemo(()=>{
+    if(!product) return 0;
     let p = product.price;
     const find = (opts?: ModifierOption[], id?: string|null) => opts?.find(o=>o.id===id || false)?.delta ?? 0;
     p += find(product.modifiers?.sizes, size);
@@ -94,6 +92,9 @@ export function ProductModal({ product, open, onClose, onConfirm }: Props){
     return p;
   }, [product, size, milk, extras]);
 
+  if(!open || !product) return null;
+
+  const has = product?.modifiers;
   const labelParts:string[] = [];
   if(size) labelParts.push(size);
   if(milk) labelParts.push((product.modifiers?.milk?.find(m=>m.id===milk)?.label) || "");
