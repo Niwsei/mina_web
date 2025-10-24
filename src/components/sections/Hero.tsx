@@ -4,7 +4,7 @@ import { Coffee, Star, Flame } from "lucide-react";
 
 export function Hero(){
   return (
-    <section className="section coffee-section bg-inherit text-(--brand-cream)">
+    <section className="section coffee-section bg-inherit text-[var(--brand-cream)]">
       <div className="pointer-events-none absolute -left-40 top-24 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(135,62,32,0.28),_rgba(12,7,5,0)_70%)] blur-3xl" />
       <div className="pointer-events-none absolute right-[-220px] top-[-120px] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,208,170,0.16),_rgba(10,6,4,0)_70%)] blur-3xl" />
 
@@ -18,10 +18,10 @@ export function Hero(){
             <div className="space-y-6 anim-fadeUp">
               <span className="badge badge-fire">คั่วสด • เมล็ดพิเศษ • รสเข้มชัด</span>
               <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.08] tracking-tight">
-              กาแฟที่ <em className="not-italic text-(--brand-gold)">เข้มทุกหยด</em> จากโรงคั่วของเรา<br/>
+              กาแฟที่ <em className="not-italic text-[var(--brand-gold)]">เข้มทุกหยด</em> จากโรงคั่วของเรา<br/>
               ซื่อสัตย์ต่อถ้วยที่อยู่ตรงหน้า
               </h1>
-              <p className="max-w-[60ch] text-(--brand-cream)/85">
+              <p className="max-w-[60ch] text-[var(--brand-cream)]/85">
               เชิญสัมผัสบรรยากาศอบอุ่นและกลิ่นกาแฟคั่วสดที่อบอวลทุกมุมร้าน
               ทั้งเมนูซิกเนเจอร์เข้มข้น และบริการสั่งออนไลน์ที่ใส่ใจเหมือนเสิร์ฟเองถึงโต๊ะ
               </p>
@@ -30,19 +30,19 @@ export function Hero(){
                 <Link href="/menu" className="btn btn-ghost btn-ghost-dark">ดูเมนู</Link>
               </div>
 
-              <div className="flex flex-wrap gap-2 pt-2 text-xs uppercase tracking-[0.2em] text-(--brand-cream)/70">
+              <div className="flex flex-wrap gap-2 pt-2 text-xs uppercase tracking-[0.2em] text-[var(--brand-cream)]/70">
                 {[
                   "Dark Chocolate",
                   "Toffee",
                   "Roasted Almond"
                 ].map((note)=> (
-                  <span key={note} className="taste-chip bg-[rgba(255,255,255,0.08)] text-[11px] font-semibold text-(--brand-cream)">
+                  <span key={note} className="taste-chip bg-[rgba(255,255,255,0.08)] text-[11px] font-semibold text-[var(--brand-cream)]">
                     {note}
                   </span>
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-6 pt-3 text-sm text-(--brand-cream)/70">
+              <div className="flex flex-wrap items-center gap-6 pt-3 text-sm text-[var(--brand-cream)]/70">
                 <span className="inline-flex items-center gap-1"><Star size={16}/> รีวิว 4.8/5</span>
                 <span className="inline-flex items-center gap-1"><Flame size={16}/> ดริปร้อนฮิตสุด</span>
                 <span className="inline-flex items-center gap-1"><Coffee size={16}/> คั่วเองในร้าน</span>
@@ -61,9 +61,9 @@ export function Hero(){
               {/* floating mini cards for depth */}
               <div className="hidden md:block">
                 <div className="absolute -left-10 -bottom-12 floating-card px-5 py-4 text-sm shadow-lg animate-float-slow">
-                  <div className="text-xs uppercase tracking-[0.3em] text-(--brand-cream)/55">seasonal beans</div>
+                  <div className="text-xs uppercase tracking-[0.3em] text-[var(--brand-cream)]/55">seasonal beans</div>
                   <div className="font-semibold text-white">Guji Uraga</div>
-                  <p className="text-xs text-(--brand-cream)/65">ลอตพิเศษ เข้ม ฟรุ๊ตตี้เล็กน้อย</p>
+                  <p className="text-xs text-[var(--brand-cream)]/65">ลอตพิเศษ เข้ม ฟรุ๊ตตี้เล็กน้อย</p>
                 </div>
                 <div className="absolute -right-8 -top-10 floating-card px-4 py-3 text-sm shadow-lg">
                   ⚡ Roast on-site

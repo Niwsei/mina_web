@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export function About(){
   return (
-    <section id="about" className="section coffee-section bg-inherit text-(--brand-cream)">
+    <section id="about" className="section coffee-section bg-inherit text-[var(--brand-cream)]">
       <div className="pointer-events-none absolute left-[12%] top-10 hidden h-48 w-48 rounded-full border border-white/10 bg-[radial-gradient(circle_at_center,_rgba(199,106,58,0.24),_rgba(10,6,4,0)_70%)] blur-[90px] lg:block" />
       <div className="container relative">
         <div className="section-shell pattern-grid overflow-hidden">
@@ -22,9 +22,9 @@ export function About(){
               className="space-y-8"
             >
               <div className="space-y-3">
-                <div className="eyebrow text-(--brand-cream)/80 font-medium">our story</div>
+                <div className="eyebrow text-[var(--brand-cream)]/80 font-medium">our story</div>
                 <h2 className="section-title text-3xl md:text-4xl font-extrabold text-white drop-shadow-[0_12px_32px_rgba(0,0,0,.45)]">เกี่ยวกับเรา</h2>
-                <p className="section-desc max-w-[60ch] text-(--brand-cream)/85">
+                <p className="section-desc max-w-[60ch] text-[var(--brand-cream)]/85">
                   เราซื่อสัตย์ต่อรสกาแฟตั้งแต่แหล่งปลูกถึงแก้วคุณ กลิ่นคั่วสดหอมกรุ่นตั้งแต่เช้า
                   โทนร้านอบอุ่น เรียบง่าย และออกแบบให้ทำงาน/พักผ่อนได้ยาว ๆ โดยไม่เสียโฟกัส
                 </p>
@@ -32,7 +32,7 @@ export function About(){
 
               <div className="flex flex-wrap gap-2">
                 {["House Blend", "Honey Process", "Slow Bar"].map((pill)=>(
-                  <span key={pill} className="taste-chip text-(--brand-cream)/85">{pill}</span>
+                  <span key={pill} className="taste-chip text-[var(--brand-cream)]/85">{pill}</span>
                 ))}
               </div>
 
@@ -43,16 +43,16 @@ export function About(){
                   "ใส่ใจสิ่งแวดล้อม รองรับแก้วส่วนตัว"
                 ].map((t,i)=>(
                   <li key={i} className="flex items-start gap-3">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[rgba(199,106,58,0.22)] text-(--brand-gold)">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[rgba(199,106,58,0.22)] text-[var(--brand-gold)]">
                       <Check size={14}/>
                     </span>
-                    <span className="text-(--brand-cream)/90">{t}</span>
+                    <span className="text-[var(--brand-cream)]/90">{t}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="grid gap-4 rounded-2xl border border-white/10 bg-[rgba(15,9,6,0.65)] p-5 text-sm text-(--brand-cream)/85">
-                <div className="font-semibold uppercase tracking-[0.3em] text-(--brand-cream)/60">journey to your cup</div>
+              <div className="grid gap-4 rounded-2xl border border-white/10 bg-[rgba(15,9,6,0.65)] p-5 text-sm text-[var(--brand-cream)]/85">
+                <div className="font-semibold uppercase tracking-[0.3em] text-[var(--brand-cream)]/60">journey to your cup</div>
                 <div className="grid gap-3 md:grid-cols-3">
                   {[
                     "คัดเลือกไร่คู่ค้าในเชียงใหม่ & น่าน",
@@ -60,8 +60,8 @@ export function About(){
                     "พักเมล็ด 5 วัน ก่อนเสิร์ฟในร้าน"
                   ].map((text,idx)=>(
                     <div key={idx} className="rounded-xl border border-white/5 bg-[rgba(255,255,255,0.03)] p-3 shadow-[0_15px_40px_-32px_rgba(0,0,0,0.75)]">
-                      <div className="text-xs uppercase tracking-[0.2em] text-(--brand-cream)/55">ขั้นตอน {idx+1}</div>
-                      <div className="mt-1 text-(--brand-cream)">{text}</div>
+                      <div className="text-xs uppercase tracking-[0.2em] text-[var(--brand-cream)]/55">ขั้นตอน {idx+1}</div>
+                      <div className="mt-1 text-[var(--brand-cream)]">{text}</div>
                     </div>
                   ))}
                 </div>
@@ -100,9 +100,9 @@ export function About(){
               </div>
               <div className="absolute -right-6 -top-8 hidden md:block">
                 <div className="floating-card px-4 py-4 text-sm shadow-lg animate-float-slow">
-                  <div className="text-xs uppercase tracking-[0.3em] text-(--brand-cream)/60">team</div>
+                  <div className="text-xs uppercase tracking-[0.3em] text-[var(--brand-cream)]/60">team</div>
                   <div className="font-semibold text-white">Barista 4+</div>
-                  <p className="text-xs text-(--brand-cream)/65">ผ่านการเทรน SCA ทุกคน</p>
+                  <p className="text-xs text-[var(--brand-cream)]/65">ผ่านการเทรน SCA ทุกคน</p>
                 </div>
               </div>
             </div>
@@ -120,13 +120,13 @@ function Stat({k, v, icon}: {k:string; v:string; icon?: React.ReactNode}) {
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
       whileHover={{ y: -5 }}
-      className="pattern-grid relative overflow-hidden rounded-2xl border border-white/10 bg-[rgba(26,16,11,0.72)] p-5 text-center text-(--brand-cream) shadow-[0_20px_45px_-24px_rgba(0,0,0,.65)] hover:shadow-[0_28px_55px_-22px_rgba(0,0,0,.7)] transition-all"
+      className="pattern-grid relative overflow-hidden rounded-2xl border border-white/10 bg-[rgba(26,16,11,0.72)] p-5 text-center text-[var(--brand-cream)] shadow-[0_20px_45px_-24px_rgba(0,0,0,.65)] hover:shadow-[0_28px_55px_-22px_rgba(0,0,0,.7)] transition-all"
     >
       <span className="shine-stripe" aria-hidden />
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(199,106,58,0.18)] text-(--brand-gold)">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(199,106,58,0.18)] text-[var(--brand-gold)]">
         {icon}
       </div>
-      <div className="mb-1 text-sm text-(--brand-cream)/70">{k}</div>
+      <div className="mb-1 text-sm text-[var(--brand-cream)]/70">{k}</div>
       <div className="text-xl font-bold text-white">{v}</div>
     </motion.div>
   );

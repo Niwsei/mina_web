@@ -32,8 +32,8 @@ export const ProductCard = memo(function ProductCard({ product, onAdd }:{
         </div>
       </div>
       <div className="space-y-2 p-4">
-  <h4 className="font-semibold text-(--brand-cream)">{product.name}</h4>
-  <p className="line-clamp-2 text-sm text-(--muted)">{product.description||" "}</p>
+  <h4 className="font-semibold text-[var(--brand-cream)]">{product.name}</h4>
+  <p className="line-clamp-2 text-sm text-[var(--muted)]">{product.description||" "}</p>
         <button
           className="btn btn-brand w-full flex items-center justify-center gap-2"
           onClick={()=>onAdd(product)}

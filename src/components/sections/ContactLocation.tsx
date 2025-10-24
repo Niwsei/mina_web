@@ -2,7 +2,7 @@ import { Clock, MapPin, Phone, Mail, Accessibility, Navigation } from "lucide-re
 
 export function ContactLocation(){
   return (
-  <section id="contact" className="section coffee-section bg-inherit text-(--brand-cream)">
+  <section id="contact" className="section coffee-section bg-inherit text-[var(--brand-cream)]">
       <div className="pointer-events-none absolute left-10 top-8 hidden h-48 w-48 rounded-full border border-white/10 bg-[radial-gradient(circle_at_center,_rgba(199,106,58,0.22),_rgba(11,7,5,0)_75%)] blur-[90px] lg:block" />
       <div className="container relative">
         <div className="section-shell pattern-grid overflow-hidden">
@@ -12,19 +12,19 @@ export function ContactLocation(){
             <div className="floating-card pattern-grid space-y-6 border border-white/10 p-6 anim-fadeUp">
               <span className="shine-stripe" aria-hidden />
               <div className="space-y-1">
-                <div className="eyebrow text-(--brand-cream)/80">visit us</div>
+                <div className="eyebrow text-[var(--brand-cream)]/80">visit us</div>
                 <h2 className="section-title text-white drop-shadow-[0_10px_28px_rgba(0,0,0,.55)]">ติดต่อ & ที่ตั้ง</h2>
               </div>
 
               <div className="flex flex-wrap gap-2">
                 {["Takeaway", "Dine-in", "Co-working"].map((pill)=>(
-                  <span key={pill} className="taste-chip text-(--brand-cream)/85">{pill}</span>
+                  <span key={pill} className="taste-chip text-[var(--brand-cream)]/85">{pill}</span>
                 ))}
               </div>
 
-              <div className="grid gap-3 text-sm text-(--brand-cream)/90">
+              <div className="grid gap-3 text-sm text-[var(--brand-cream)]/90">
                 <Row icon={<Clock size={16}/>} title="เวลาเปิดทำการ">
-                  ทุกวัน 08:00–21:00 <span className="text-xs text-(--brand-cream)/60">(อัปเดตวันนี้)</span>
+                  ทุกวัน 08:00–21:00 <span className="text-xs text-[var(--brand-cream)]/60">(อัปเดตวันนี้)</span>
                 </Row>
                 <Row icon={<MapPin size={16}/>} title="ที่อยู่">
                   123 ถนนสุขุมวิท แขวง/เขต… กรุงเทพฯ 10xxx
@@ -43,9 +43,9 @@ export function ContactLocation(){
               <div className="divider-gradient" />
 
               {/* Guidance */}
-              <div className="space-y-2 text-sm text-(--brand-cream)/85">
+              <div className="space-y-2 text-sm text-[var(--brand-cream)]/85">
                 <div className="font-medium text-white">การเดินทาง & จุดสังเกต</div>
-                <ul className="list-disc space-y-1 pl-5 text-(--brand-cream)/75">
+                <ul className="list-disc space-y-1 pl-5 text-[var(--brand-cream)]/75">
                   <li>BTS/MRT ที่ใกล้สุด: …</li>
                   <li>ที่จอดรถ: มี … คัน</li>
                   <li>ใกล้สวนสาธารณะ … (เดิน 5 นาที)</li>
@@ -71,10 +71,10 @@ export function ContactLocation(){
                   loading="lazy"
                 />
               </div>
-              <div className="absolute left-4 top-4 rounded-full bg-[rgba(18,10,6,0.78)] px-3 py-1 text-xs text-(--brand-cream) shadow-lg">
+              <div className="absolute left-4 top-4 rounded-full bg-[rgba(18,10,6,0.78)] px-3 py-1 text-xs text-[var(--brand-cream)] shadow-lg">
                 เปิดวันนี้ 08:00–21:00
               </div>
-              <div className="absolute bottom-4 right-4 rounded-full bg-[rgba(255,255,255,0.08)] px-3 py-1 text-xs uppercase tracking-[0.3em] text-(--brand-cream)/70">
+              <div className="absolute bottom-4 right-4 rounded-full bg-[rgba(255,255,255,0.08)] px-3 py-1 text-xs uppercase tracking-[0.3em] text-[var(--brand-cream)]/70">
                 350 ม. จาก BTS
               </div>
             </div>
@@ -87,10 +87,10 @@ export function ContactLocation(){
 function Row({ icon, title, children }:{ icon: React.ReactNode; title: string; children: React.ReactNode }){
   return (
     <div className="flex items-start gap-3 rounded-xl border border-white/5 bg-[rgba(255,255,255,0.03)] p-3">
-      <div className="mt-1 rounded-full bg-[rgba(199,106,58,0.18)] p-1.5 text-(--brand-gold)">{icon}</div>
+      <div className="mt-1 rounded-full bg-[rgba(199,106,58,0.18)] p-1.5 text-[var(--brand-gold)]">{icon}</div>
       <div className="space-y-0.5">
-        <div className="text-(--brand-cream)/80">{title}</div>
-        <div className="tabular-nums text-(--brand-cream)">{children}</div>
+        <div className="text-[var(--brand-cream)]/80">{title}</div>
+        <div className="tabular-nums text-[var(--brand-cream)]">{children}</div>
       </div>
     </div>
   );
