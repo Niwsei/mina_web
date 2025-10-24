@@ -3,6 +3,8 @@ import type { Promotion } from "@/lib/types";
 import { toast } from "@/components/ui/toast";
 import { Copy, Gift, Sparkles, Timer, Trophy } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useCartStore } from "@/components/cart/store";
+import { applyPromo } from "@/lib/api";
 
 type PromoTab = Promotion["status"] | "ALL";
 
@@ -90,6 +92,43 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
     }
   }
 
+  async function apply(promo: Promotion) {
+    // Basic guard: promo must be ACTIVE
+    if (promo.status !== "ACTIVE") {
+      toast({ title: "โปรโมชั่นไม่สามารถใช้ได้", description: "โปรโมชั่นนี้ยังไม่พร้อมใช้งาน", variant: "info" });
+      return;
+    }
+
+    const items = useCartStore.getState().items;
+    if (!items || items.length === 0) {
+      toast({ title: "ตะกร้าว่าง", description: "กรุณาเพิ่มสินค้าในตะกร้าก่อนใช้โปรโมชั่น", variant: "info" });
+      return;
+    }
+
+    // Basic eligibility checks for special promos (mock rules)
+    if (promo.code === "FREESHOT") {
+      // require at least one coffee-like product by name
+      const hasCoffee = items.some(i => /กาแฟ|เอสเพรสโซ|ลาเต้|latte|espresso/i.test(i.name));
+      if (!hasCoffee) {
+        toast({ title: "ข้อกำหนดไม่ถูกต้อง", description: "โปรโมชั่นนี้ใช้ได้เฉพาะการสั่งเครื่องดื่มกาแฟ", variant: "info" });
+        return;
+      }
+    }
+
+    const subtotal = items.reduce((s, it) => s + it.unitPrice * it.qty, 0);
+    try {
+      const res = await applyPromo(items.map(i=>({ productId:i.productId, qty:i.qty, unitPrice:i.unitPrice })), subtotal, promo.code);
+      if (res.discount && res.discount > 0) {
+        useCartStore.getState().setDiscount(promo.code || "", res.discount);
+        toast({ title: "โปรโมชั่นใช้ได้", description: res.breakdown.join('\n'), variant: "success" });
+      } else {
+        toast({ title: "ไม่สามารถใช้โปรโมชั่น", description: res.breakdown.join('\n'), variant: "error" });
+      }
+    } catch (err) {
+      toast({ title: "เกิดข้อผิดพลาด", description: "ไม่สามารถตรวจสอบโปรโมชั่นได้", variant: "error" });
+    }
+  }
+
   if (!stats.total) {
     return (
       <section className="space-y-8">
@@ -114,7 +153,7 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
             <span className="badge badge-dark inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em]">
               <Sparkles size={16} /> Featured Offer
             </span>
-            <h2 className="text-2xl font-semibold text-[var(--brand-cream)] md:text-4xl">
+            <h2 className="text-2xl font-semibold text-(--brand-cream) md:text-4xl">
               {featured.title}
             </h2>
             <p className="max-w-xl text-sm text-neutral-100/80 md:text-base">
@@ -194,7 +233,7 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
                 <div className="space-y-1">
                   <h4 className="text-lg font-semibold text-neutral-900">{promo.title}</h4>
                   {formatValue(promo) && (
-                    <p className="text-sm font-medium text-[var(--brand-red)]">
+                    <p className="text-sm font-medium text-(--brand-red)">
                       {formatValue(promo)}
                     </p>
                   )}
