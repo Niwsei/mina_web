@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, Coffee, Users, Star } from "lucide-react";
 import type { ReactNode } from "react";
+import heroImage from "../../../public/home/angle_coffee.jpg";
+import viewCoffeeImage from "../../../public/home/view_coffee.jpg";
 
 export function About() {
   return (
@@ -82,12 +84,12 @@ export function About() {
               <div className="card glass card-dark pattern-grid p-0 overflow-hidden rounded-2xl shadow-lg will-change-transform">
                 <span className="shine-stripe" aria-hidden />
                 <Image
-                  src="/home/angle_coffee.jpg"
+                  src={heroImage}
                   alt="บาร์กาแฟและทีม"
-                  width={1200}
-                  height={800}
-                  priority={false}
-                  quality={85}
+                  width={heroImage.width}
+                  height={heroImage.height}
+                  loading="lazy"
+                  placeholder="blur"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 55vw, 560px"
                   className="h-80 w-full object-cover"
                 />
@@ -96,10 +98,12 @@ export function About() {
               <div className="absolute -left-8 -bottom-10 hidden md:block">
                 <div className="floating-card pattern-grid overflow-hidden p-0">
                   <Image
-                    src="/home/view_coffee.jpg"
+                    src={viewCoffeeImage}
                     alt="เมล็ดกาแฟ"
-                    width={320}
-                    height={240}
+                    width={viewCoffeeImage.width}
+                    height={viewCoffeeImage.height}
+                    loading="lazy"
+                    placeholder="blur"
                     sizes="(max-width: 768px) 60vw, 320px"
                     className="h-32 w-48 rounded-[1.1rem] object-cover"
                   />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Coffee, Star, Flame } from "lucide-react";
+import heroImage from "../../../public/home/angle_coffee.jpg";
 
 export function Hero(){
   return (
@@ -55,12 +56,12 @@ export function Hero(){
               <div className="card glass card-dark pattern-grid p-0 overflow-hidden will-change-transform transition-transform">
                 <span className="shine-stripe" aria-hidden />
                 <Image
-                  src="/home/angle_coffee.jpg"
+                  src={heroImage}
                   alt="บรรยากาศคาเฟ่"
-                  width={1200}
-                  height={800}
+                  width={heroImage.width}
+                  height={heroImage.height}
                   priority
-                  quality={85}
+                  placeholder="blur"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 55vw, 640px"
                   className="h-80 w-full object-cover"
                 />
