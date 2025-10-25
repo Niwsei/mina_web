@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -12,7 +12,25 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: "YourCafe — Specialty Coffee", template: "%s — YourCafe" },
   description: "สั่งออนไลน์ เมนูอัปเดตเรียลไทม์ • Digital Twin ของคาเฟ่คุณ",
+  applicationName: SITE.name,
   alternates: { canonical: SITE.url },
+  category: "Cafe",
+  keywords: ["คาเฟ่", "กาแฟพิเศษ", "เมนูออนไลน์", "YourCafe", "คั่วสด"],
+  authors: [{ name: SITE.name }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
+  },
+  formatDetection: { telephone: true, address: true, email: true },
   openGraph: {
     type: "website",
     siteName: SITE.name,
@@ -33,6 +51,10 @@ export const metadata: Metadata = {
     description: "สั่งออนไลน์ เมนูอัปเดตเรียลไทม์ • Digital Twin ของคาเฟ่คุณ",
     images: ["/og.jpg"]
   }
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0503"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

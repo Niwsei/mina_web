@@ -1,11 +1,9 @@
-'use client';
-
 import Link from "next/link";
 import Image from "next/image";
 import { Check, Coffee, Users, Star } from "lucide-react";
-import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
-export function About(){
+export function About() {
   return (
     <section id="about" className="section coffee-section bg-inherit text-[var(--brand-cream)]">
       <div className="pointer-events-none absolute left-[12%] top-10 hidden h-48 w-48 rounded-full border border-white/10 bg-[radial-gradient(circle_at_center,_rgba(199,106,58,0.24),_rgba(10,6,4,0)_70%)] blur-[90px] lg:block" />
@@ -14,13 +12,7 @@ export function About(){
           <span className="shine-stripe" aria-hidden />
           <div className="grid gap-12 md:grid-cols-[1.05fr_.95fr]">
             {/* Copy + bullets + stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="space-y-8"
-            >
+            <div className="space-y-8 anim-fadeUp">
               <div className="space-y-3">
                 <div className="eyebrow text-[var(--brand-cream)]/80 font-medium">our story</div>
                 <h2 className="section-title text-3xl md:text-4xl font-extrabold text-white drop-shadow-[0_12px_32px_rgba(0,0,0,.45)]">เกี่ยวกับเรา</h2>
@@ -82,19 +74,35 @@ export function About(){
                   สั่งออนไลน์
                 </Link>
               </div>
-            </motion.div>
+            </div>
 
             {/* Visual collage */}
             <div className="relative">
               <div className="pointer-events-none absolute -top-16 right-6 hidden h-36 w-36 rounded-full bg-[radial-gradient(circle_at_center,_rgba(224,173,99,0.26),_rgba(11,7,5,0)_70%)] blur-2xl lg:block" />
               <div className="card glass card-dark pattern-grid p-0 overflow-hidden rounded-2xl shadow-lg will-change-transform">
                 <span className="shine-stripe" aria-hidden />
-                <Image src="/home/angle_coffee.jpg" alt="บาร์กาแฟและทีม" width={1200} height={800} className="h-80 w-full object-cover" priority />
+                <Image
+                  src="/home/angle_coffee.jpg"
+                  alt="บาร์กาแฟและทีม"
+                  width={1200}
+                  height={800}
+                  priority={false}
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 55vw, 560px"
+                  className="h-80 w-full object-cover"
+                />
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,6,4,0)_30%,rgba(10,6,4,0.75)_100%)]" />
               </div>
               <div className="absolute -left-8 -bottom-10 hidden md:block">
                 <div className="floating-card pattern-grid overflow-hidden p-0">
-                  <Image src="/home/view_coffee.jpg" alt="เมล็ดกาแฟ" width={320} height={240} className="h-32 w-48 rounded-[1.1rem] object-cover" />
+                  <Image
+                    src="/home/view_coffee.jpg"
+                    alt="เมล็ดกาแฟ"
+                    width={320}
+                    height={240}
+                    sizes="(max-width: 768px) 60vw, 320px"
+                    className="h-32 w-48 rounded-[1.1rem] object-cover"
+                  />
                   <div className="absolute bottom-3 left-3 rounded-full bg-[rgba(0,0,0,0.55)] px-3 py-1 text-xs uppercase tracking-[0.2em] text-white/80">roastery</div>
                 </div>
               </div>
@@ -112,15 +120,10 @@ export function About(){
     </section>
   );
 }
-function Stat({k, v, icon}: {k:string; v:string; icon?: React.ReactNode}) {
+function Stat({ k, v, icon }: { k: string; v: string; icon?: ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-      whileHover={{ y: -5 }}
-      className="pattern-grid relative overflow-hidden rounded-2xl border border-white/10 bg-[rgba(26,16,11,0.72)] p-5 text-center text-[var(--brand-cream)] shadow-[0_20px_45px_-24px_rgba(0,0,0,.65)] hover:shadow-[0_28px_55px_-22px_rgba(0,0,0,.7)] transition-all"
+    <div
+      className="pattern-grid relative overflow-hidden rounded-2xl border border-white/10 bg-[rgba(26,16,11,0.72)] p-5 text-center text-[var(--brand-cream)] shadow-[0_20px_45px_-24px_rgba(0,0,0,.65)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_55px_-22px_rgba(0,0,0,.7)] anim-fadeUp"
     >
       <span className="shine-stripe" aria-hidden />
       <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(199,106,58,0.18)] text-[var(--brand-gold)]">
@@ -128,6 +131,6 @@ function Stat({k, v, icon}: {k:string; v:string; icon?: React.ReactNode}) {
       </div>
       <div className="mb-1 text-sm text-[var(--brand-cream)]/70">{k}</div>
       <div className="text-xl font-bold text-white">{v}</div>
-    </motion.div>
+    </div>
   );
 }

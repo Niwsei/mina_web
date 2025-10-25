@@ -53,10 +53,10 @@ export function ContactLocation(){
               </div>
 
               {/* Quick actions */}
-              <div className="grid grid-cols-3 gap-2">
-                <a className="btn btn-ghost btn-ghost-dark" href="tel:+66XXXXXXXXX"><Phone size={16}/> โทร</a>
-                <a className="btn btn-ghost btn-ghost-dark" href="mailto:hello@yourcafe.com"><Mail size={16}/> อีเมล</a>
-                <a className="btn btn-brand" href="https://maps.google.com" target="_blank" rel="noreferrer"><Navigation size={16}/> นำทาง</a>
+              <div className="grid gap-2 sm:grid-cols-3">
+                <a className="btn btn-ghost btn-ghost-dark justify-center" href="tel:+66XXXXXXXXX"><Phone size={16}/> โทร</a>
+                <a className="btn btn-ghost btn-ghost-dark justify-center" href="mailto:hello@yourcafe.com"><Mail size={16}/> อีเมล</a>
+                <a className="btn btn-brand justify-center" href="https://maps.google.com" target="_blank" rel="noreferrer"><Navigation size={16}/> นำทาง</a>
               </div>
             </div>
 
@@ -66,7 +66,7 @@ export function ContactLocation(){
                 <span className="shine-stripe" aria-hidden />
                 <iframe
                   title="แผนที่ร้าน"
-                  className="h-[380px] w-full grayscale hover:grayscale-0 transition"
+                  className="h-[260px] w-full transition grayscale hover:grayscale-0 sm:h-[360px]"
                   src="https://maps.google.com/maps?q=Bangkok&t=&z=13&ie=UTF8&iwloc=&output=embed"
                   loading="lazy"
                 />

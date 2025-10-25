@@ -1,8 +1,8 @@
 import type { Category, EventItem, Promotion } from "@/lib/types";
 
 export const SITE = {
-  name: "YourCafe",
-  url: "https://yourcafe.example.com",
+  name: "Gowhere",
+  url: "https://mina-web-psi.vercel.app/",
   logo: "https://yourcafe.example.com/logo.png",
   telephone: "+66-XXX-XXX-XXX",
   sameAs: [

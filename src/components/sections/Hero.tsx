@@ -5,8 +5,8 @@ import { Coffee, Star, Flame } from "lucide-react";
 export function Hero(){
   return (
     <section className="section coffee-section bg-inherit text-[var(--brand-cream)]">
-      <div className="pointer-events-none absolute -left-40 top-24 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(135,62,32,0.28),_rgba(12,7,5,0)_70%)] blur-3xl" />
-      <div className="pointer-events-none absolute right-[-220px] top-[-120px] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,208,170,0.16),_rgba(10,6,4,0)_70%)] blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-12 h-[clamp(220px,46vw,420px)] w-[clamp(220px,46vw,420px)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(135,62,32,0.28),_rgba(12,7,5,0)_70%)] blur-3xl sm:left-[-30px] sm:top-16 sm:translate-x-0 lg:block" />
+      <div className="pointer-events-none absolute right-0 top-[-80px] hidden sm:block h-[clamp(240px,38vw,520px)] w-[clamp(240px,38vw,520px)] translate-x-[15%] rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,208,170,0.16),_rgba(10,6,4,0)_70%)] blur-3xl lg:right-[-120px] lg:translate-x-0" />
 
       <div className="container relative">
         <div className="pointer-events-none absolute -top-24 right-24 hidden h-32 w-32 rotate-12 rounded-full border border-white/10 bg-[conic-gradient(from_180deg_at_50%_50%,rgba(255,255,255,0.15)_0deg,rgba(199,106,58,0.35)_120deg,rgba(255,255,255,0)_320deg)] blur-[60px] md:block" />
@@ -54,7 +54,16 @@ export function Hero(){
               <div className="pointer-events-none absolute -left-6 top-12 hidden h-36 w-36 rounded-full bg-[radial-gradient(circle_at_center,_rgba(231,200,167,0.25),_rgba(12,7,5,0)_70%)] blur-2xl md:block" />
               <div className="card glass card-dark pattern-grid p-0 overflow-hidden will-change-transform transition-transform">
                 <span className="shine-stripe" aria-hidden />
-                <Image src="/home/angle_coffee.jpg" alt="บรรยากาศคาเฟ่" width={1200} height={800} className="h-80 w-full object-cover" priority />
+                <Image
+                  src="/home/angle_coffee.jpg"
+                  alt="บรรยากาศคาเฟ่"
+                  width={1200}
+                  height={800}
+                  priority
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 55vw, 640px"
+                  className="h-80 w-full object-cover"
+                />
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,7,5,0)_40%,rgba(11,7,5,0.65)_100%)]" />
               </div>
 
@@ -65,7 +74,7 @@ export function Hero(){
                   <div className="font-semibold text-white">Guji Uraga</div>
                   <p className="text-xs text-[var(--brand-cream)]/65">ลอตพิเศษ เข้ม ฟรุ๊ตตี้เล็กน้อย</p>
                 </div>
-                <div className="absolute -right-8 -top-10 floating-card px-4 py-3 text-sm shadow-lg">
+                <div className="absolute -right-12 -top-14 floating-card px-4 py-3 text-sm shadow-lg">
                   ⚡ Roast on-site
                 </div>
               </div>

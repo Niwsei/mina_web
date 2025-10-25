@@ -123,7 +123,12 @@ export function ProductModal({ product, open, onClose, onConfirm }: Props){
               title="ท็อปปิ้ง"
               options={has.extras}
               value={extras}
-              onToggle={(id)=>{ const s=new Set(extras); s.has(id)? s.delete(id): s.add(id); setExtras(s); }}
+              onToggle={(id)=>{
+                const s = new Set(extras);
+                if (s.has(id)) s.delete(id);
+                else s.add(id);
+                setExtras(s);
+              }}
             />
           )}
 
