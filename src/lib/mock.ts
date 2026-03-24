@@ -1,5 +1,5 @@
 import type {
-  Category, ApplyPromoResponse, CreateOrderPayload, OrderResponse, Promotion, EventItem
+  Category, ApplyPromoResponse, CreateOrderPayload, OrderResponse, Promotion, EventItem, PackageItem
 } from "./types";
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -33,8 +33,10 @@ const MENU: Category[] = [
     id: "espresso",
     name: "เอสเพรสโซ่",
     products: [
-      { id: "esp1", name: "เอสเพรสโซ่", price: 7500, description: "ช็อตเข้มกลมกล่อม", imageUrl: IMG.ESPRESSO,
-        modifiers: { sizes: [{ id: "S", label: "Single", delta: 0 }, { id: "D", label: "Double", delta: 1500 }] } },
+      {
+        id: "esp1", name: "เอสเพรสโซ่", price: 7500, description: "ช็อตเข้มกลมกล่อม", imageUrl: IMG.ESPRESSO,
+        modifiers: { sizes: [{ id: "S", label: "Single", delta: 0 }, { id: "D", label: "Double", delta: 1500 }] }
+      },
       { id: "lat1", name: "ลาเต้", price: 9500, description: "บาลานซ์นมและช็อต", imageUrl: IMG.LATTE, modifiers: baseModifiers }
     ]
   },
@@ -46,9 +48,9 @@ const MENU: Category[] = [
 ];
 
 export const REVIEWS = [
-  { id: "r1", author: "Nok",  rating: 5, text: "ลาเต้นมโอ๊ตคือที่สุด หอมมาก!", source: "Google" },
+  { id: "r1", author: "Nok", rating: 5, text: "ลาเต้นมโอ๊ตคือที่สุด หอมมาก!", source: "Google" },
   { id: "r2", author: "Bank", rating: 5, text: "บาริสต้าใส่ใจ รายละเอียดดีมาก", source: "Google" },
-  { id: "r3", author: "Mew",  rating: 4, text: "เอสเพรสโซ่เข้มแต่คลีน บรรยากาศดี", source: "Google" },
+  { id: "r3", author: "Mew", rating: 4, text: "เอสเพรสโซ่เข้มแต่คลีน บรรยากาศดี", source: "Google" },
   { id: "r4", author: "Tarn", rating: 5, text: "ครัวซองต์อบใหม่ กรอบนอกนุ่มใน", source: "Google" }
 ];
 
@@ -94,15 +96,14 @@ const EVENTS: EventItem[] = [
   }
 ];
 
-export async function fetchMenu(): Promise<Category[]> { await delay(200); return JSON.parse(JSON.stringify(MENU)); }
-export async function getMenuClient(): Promise<Category[]> { await delay(150); return JSON.parse(JSON.stringify(MENU)); }
+export async function fetchMenu(): Promise<Category[]> { return JSON.parse(JSON.stringify(MENU)); }
+export async function getMenuClient(): Promise<Category[]> { return JSON.parse(JSON.stringify(MENU)); }
 
 export async function applyPromo(
   items: { productId: string; qty: number; unitPrice: number }[],
   subtotal: number,
   code?: string
 ): Promise<ApplyPromoResponse> {
-  await delay(120);
   const normalized = (code || "").trim().toUpperCase();
   if (!normalized) return { discount: 0, applied: [], breakdown: [] };
   if (normalized === "WELCOME10") {
@@ -122,5 +123,50 @@ export async function createOrder(payload: CreateOrderPayload): Promise<OrderRes
   return { order: { id: "ORD-" + Math.random().toString(36).slice(2, 7).toUpperCase(), total } };
 }
 
-export async function fetchPromotions(): Promise<Promotion[]> { await delay(100); return JSON.parse(JSON.stringify(PROMOS)); }
-export async function fetchEvents(): Promise<EventItem[]> { await delay(100); return JSON.parse(JSON.stringify(EVENTS)); }
+export async function fetchPromotions(): Promise<Promotion[]> { return JSON.parse(JSON.stringify(PROMOS)); }
+export async function fetchEvents(): Promise<EventItem[]> { return JSON.parse(JSON.stringify(EVENTS)); }
+
+const PACKAGES: PackageItem[] = [
+  {
+    id: "pkg1",
+    title: "Catering Set A (Coffee Break)",
+    price: 450000, // 4,500 THB
+    description: "ชุดเบรคกาแฟพร้อมขนมสำหรับงานสัมมนาขนาดเล็ก-กลาง (20-30 ท่าน)",
+    imageUrl: IMG.LATTE,
+    features: [
+      "เครื่องดื่มกาแฟสด 30 แก้ว (คละเมนูได้)",
+      "ขนมเบเกอรี่ 30 ชิ้น (ครัวซองต์/มัฟฟิน)",
+      "บริการจัดส่งฟรีในระยะ 5 กม."
+    ],
+    recommendedFor: "งานประชุม, สัมมนา, เวิร์กช็อป"
+  },
+  {
+    id: "pkg2",
+    title: "Morning Booster Set",
+    price: 250000, // 2,500 THB
+    description: "ชุดอาหารเช้าแบบเร่งด่วนสำหรับออฟฟิศ (10-15 ท่าน)",
+    imageUrl: IMG.CROISSANT,
+    features: [
+      "Cold Brew 2 ลิตร",
+      "แซนด์วิชแฮมชีส 15 ชิ้น",
+      "ผลไม้สดตัดแต่ง 2 กล่องใหญ่"
+    ],
+    recommendedFor: "Team Meeting, อาหารเช้าออฟฟิศ"
+  },
+  {
+    id: "pkg3",
+    title: "Full Course Event Station",
+    price: 1500000, // 15,000 THB
+    description: "ยกบาร์กาแฟไปหาคุณ! พร้อมบาริสต้ามืออาชีพ 4 ชั่วโมง",
+    imageUrl: IMG.EVENT,
+    features: [
+      "บาริสต้า 2 ท่าน ให้บริการ 4 ชม.",
+      "เครื่องดื่มไม่จำกัด (เมนูมาตรฐานร้าน)",
+      "อุปกรณ์บาร์ครบชุด",
+      "แก้วและหลอดรักษ์โลก"
+    ],
+    recommendedFor: "งานแต่งงาน, Grand Opening, อีเวนต์ใหญ่"
+  }
+];
+
+export async function fetchPackages(): Promise<PackageItem[]> { return JSON.parse(JSON.stringify(PACKAGES)); }

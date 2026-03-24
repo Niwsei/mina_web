@@ -1,9 +1,15 @@
 "use client";
-import { useMemo, useState } from "react";
-import { ProductCard } from "@/components/ProductCard";
+import { useMemo, useState, useCallback, memo } from "react";
+import dynamic from "next/dynamic";
 import { useCartStore } from "@/components/cart/store";
 import { CategoryPills } from "@/components/menu/CategoryPills";
 import { SearchBar } from "@/components/menu/SearchBar";
+import { toast } from "@/components/ui/toast";
+
+// Lazy load ProductCard - reduces initial bundle
+const ProductCard = dynamic(() => import("@/components/ProductCard").then(m => m.ProductCard), {
+  loading: () => <div className="h-64 animate-pulse rounded-lg bg-white/5" />,
+});
 
 export type MenuProduct = {
   id: string;
@@ -55,7 +61,10 @@ export function MenuClient({ initialMenu }:{ initialMenu: MenuCategory[] }){
             <ProductCard
               key={product.id}
               product={product}
-              onAdd={(prod)=>add({productId:prod.id, name:prod.name, unitPrice:prod.price})}
+              onAdd={(prod)=>{
+                add({productId:prod.id, name:prod.name, unitPrice:prod.price});
+                toast({ title: "Added to cart", description: prod.name, variant: "success" });
+              }}
             />
           ))}
         </div>
@@ -66,12 +75,12 @@ export function MenuClient({ initialMenu }:{ initialMenu: MenuCategory[] }){
   );
 }
 
-function EmptyState({ query }:{ query:string }){
+const EmptyState = memo(function EmptyState({ query }:{ query:string }){
   return (
-    <div className="floating-card anim-fadeUp space-y-2 rounded-[calc(var(--radius)+4px)] border-white/10 bg-[rgba(18,10,6,0.82)] p-10 text-center text-[var(--brand-cream)]/80">
+    <div className="floating-card anim-fadeUp space-y-2 rounded-[calc(var(--radius)+4px)] border-white/10 bg-[rgba(18,10,6,0.82)] p-10 text-center text-(--brand-cream)/80">
       <div className="badge badge-fire mb-2">ไม่มีผลลัพธ์</div>
-      <p className="text-sm">ไม่พบรายการที่ตรงกับ “{query}”</p>
-      <p className="text-xs text-[var(--brand-cream)]/60">ลองเปลี่ยนหมวดหมู่หรือกรองคำค้นหาใหม่อีกครั้ง</p>
+      <p className="text-sm">ไม่พบรายการที่ตรงกับ &quot;{query}&quot;</p>
+      <p className="text-xs text-(--brand-cream)/60">ลองเปลี่ยนหมวดหมู่หรือกรองคำค้นหาใหม่อีกครั้ง</p>
     </div>
   );
-}
+});

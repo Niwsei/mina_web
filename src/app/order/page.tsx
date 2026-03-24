@@ -4,6 +4,9 @@ import { OrderClient } from "./ui-client";
 
 const og = (t: string, s?: string) => `/api/og?title=${encodeURIComponent(t)}${s ? `&subtitle=${encodeURIComponent(s)}` : ""}`;
 
+// ISR: menu data rarely changes, revalidate every 5 minutes
+export const revalidate = 300;
+
 export const metadata: Metadata = {
   title: "สั่งออนไลน์",
   description: "เลือกเมนู ปรับแต่ง และยืนยันออเดอร์ได้ทันที",

@@ -221,37 +221,41 @@ export function PromoClient({ initial }: { initial: Promotion[] }) {
           </div>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {filtered.map((promo) => (
             <ContentCard
               key={promo.id}
               badge={promo.badge}
               header={
-                <>
-                  <div className="space-y-1">
-                    <h4 className="text-lg font-semibold text-neutral-900">{promo.title}</h4>
-                    {formatValue(promo) && (
-                      <p className="text-sm font-medium text-[var(--brand-red)]">
-                        {formatValue(promo)}
-                      </p>
-                    )}
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex items-start justify-between gap-3 w-full">
+                    <h4 className="text-sm sm:text-base font-semibold text-neutral-900 leading-tight flex-1 min-w-0">{promo.title}</h4>
+                    <span className={`content-status ${statusToneCard[promo.status]}`}>
+                      {statusLabel[promo.status]}
+                    </span>
                   </div>
-                  <span className={`content-status ${statusToneCard[promo.status]}`}>
-                    {statusLabel[promo.status]}
-                  </span>
-                </>
+                  {formatValue(promo) && (
+                    <p className="text-xs sm:text-sm font-medium text-(--brand-orange)">
+                      {formatValue(promo)}
+                    </p>
+                  )}
+                </div>
               }
               footer={
-                <>
+                <div className="flex items-center justify-between gap-3 w-full">
                   {promo.code ? (
-                    <code className="promo-code">{promo.code}</code>
+                    <code className="promo-code text-xs">{promo.code}</code>
                   ) : (
-                    <span className="text-sm text-neutral-500">ไม่ต้องใช้โค้ด</span>
+                    <span className="text-xs text-neutral-500">ไม่ต้องใช้โค้ด</span>
                   )}
-                  <button className="btn btn-ghost" onClick={() => copy(promo.code)}>
-                    <Copy size={16} /> คัดลอก
+                  <button 
+                    className={`btn text-sm ${promo.status === "ACTIVE" ? "btn-brand" : "btn-ghost"}`} 
+                    onClick={() => promo.status === "ACTIVE" ? handleApply(promo) : copy(promo.code)}
+                    disabled={promo.status === "EXPIRED"}
+                  >
+                    <Copy size={14} /> {promo.status === "ACTIVE" ? "ใช้โค้ด" : "คัดลอก"}
                   </button>
-                </>
+                </div>
               }
             >
               <p className="text-sm text-neutral-700">{promo.description}</p>

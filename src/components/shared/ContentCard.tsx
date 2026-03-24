@@ -16,8 +16,9 @@ export function ContentCard({
     <article className="content-card">
       {image}
       <div className="content-card-body">
+        {/* Badge now inline above title, not absolute positioned */}
         {badge && <span className="content-card-badge">{badge}</span>}
-        <header className="flex items-start justify-between gap-3">{header}</header>
+        <header className="flex items-start justify-between gap-4">{header}</header>
         {children}
         <div className="content-card-footer">{footer}</div>
       </div>

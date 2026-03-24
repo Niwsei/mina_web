@@ -4,7 +4,8 @@ import { EventsClient } from "./ui-client";
 
 const og = (t: string, s?: string) => `/api/og?title=${encodeURIComponent(t)}${s ? `&subtitle=${encodeURIComponent(s)}` : ""}`;
 
-export const revalidate = 60;
+// Events change infrequently - cache for 10 minutes
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: "อีเวนต์",

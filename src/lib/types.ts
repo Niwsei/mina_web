@@ -45,3 +45,13 @@ export type EventItem = {
   blurb: string;
   status: "UPCOMING" | "PAST";
 };
+
+export type PackageItem = {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  imageUrl?: string;
+  features: string[];
+  recommendedFor: string;
+};

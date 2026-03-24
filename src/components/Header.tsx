@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Coffee, Menu, X } from "lucide-react";
 
 // --- 1. Data-Driven Navigation ---
@@ -27,7 +27,8 @@ const navItems: NavItem[] = [
   { type: "page", href: "/menu", label: "เมนู" },
   { type: "page", href: "/promotions", label: "โปรโมชัน" },
   { type: "page", href: "/events", label: "อีเวนต์" },
-  { type: "page", href: "/order", label: "สั่งออนไลน์", isCta: true },
+  { type: "page", href: "/external-packages", label: "Package ภายนอก" },
+  // { type: "page", href: "/order", label: "สั่งออนไลน์", isCta: true }, // Hidden - payment gateway not ready
 ];
 
 export function Header() {
@@ -42,9 +43,18 @@ export function Header() {
 
   // --- 2. Effects ---
 
-  /* Shadow/opacity on scroll */
+  /* Shadow/opacity on scroll - throttled for mobile performance */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 8);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -183,7 +193,7 @@ export function Header() {
               </span>
               <span className="flex flex-col leading-tight text-left">
                 <span className="text-lg font-semibold uppercase tracking-[0.12em] text-white">
-                  YourCafe
+                  GoWhere
                 </span>
                 <span className="text-[10px] uppercase tracking-[0.38em] text-[var(--brand-cream)]/70">
                   Dark roast studio
@@ -191,24 +201,24 @@ export function Header() {
               </span>
             </Link>
 
-            <div className="ml-auto hidden items-center gap-6 md:flex">
-              <div className="hidden items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--brand-cream)]/60 lg:flex">
+            <div className="ml-auto hidden items-center gap-4 md:flex shrink-0">
+              <div className="hidden items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-[var(--brand-cream)]/60 xl:flex shrink-0">
                 <span className="inline-flex h-2.5 w-2.5 items-center justify-center">
                   <span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-orange)] shadow-[0_0_0_5px_rgba(234,88,12,.28)]" />
                 </span>
-                <span className="font-medium">Roasting daily • 8.00–21.00</span>
+                <span className="font-medium whitespace-nowrap">Roasting daily • 8.00–21.00</span>
               </div>
 
               {/* Desktop Nav (Render from loop) */}
-              <nav aria-label="Primary">
-                <ul className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-1.5 py-1 shadow-[0_18px_46px_-28px_rgba(0,0,0,.6)] backdrop-blur">
+              <nav aria-label="Primary" className="shrink-0">
+                <ul className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-1.5 py-1 shadow-[0_18px_46px_-28px_rgba(0,0,0,.6)] backdrop-blur whitespace-nowrap">
                   {navItems.map((item) => {
                     const linkProps =
                       item.type === "page"
                         ? getPageProps(item)
                         : getAnchorProps(item);
                     return (
-                      <li key={item.type === "page" ? item.href : item.id}>
+                      <li key={item.type === "page" ? item.href : item.id} className="shrink-0">
                         <Link prefetch {...linkProps}>
                           {item.label}
                         </Link>
